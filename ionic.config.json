@@ -1,0 +1,7 @@
+{
+  "name": "diplomski",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
