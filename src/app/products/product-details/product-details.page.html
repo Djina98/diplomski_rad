@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/products" color="tertiary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="tertiary" class="ion-text-center">Detalji o proizvodu</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onDeleteProduct()">
+        <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col no-padding>
+        <ion-img [src]="loadedProduct.imageUrl"></ion-img>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h5>{{loadedProduct.title}}</h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="leaf-outline"></ion-icon>
+        {{loadedProduct.type}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="cart"></ion-icon>
+        Neto sadržaj: {{loadedProduct.amount}} grama
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="pricetags"></ion-icon>
+        Cena: {{loadedProduct.price}} dinara
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        Opis: {{loadedProduct.description}}
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</ion-content>

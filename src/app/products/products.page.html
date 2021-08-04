@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Bee Organic</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <app-product-item
+      *ngFor="let product of products"
+      [productItem]="product"
+    >
+    </app-product-item>
+  </ion-list>
+</ion-content>
