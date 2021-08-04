@@ -1,9 +1,71 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>signup</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="welcome" text=""></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="bg-color">
+  <ion-card class="ion-no-margin">
+    <ion-card-header>
+      <ion-card-title>
+        Registracija
+      </ion-card-title>
+
+      <ion-card-subtitle>
+        Napravite svoj nalog
+        popunjavanjem forme u nastavku
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+            <ion-item>
+              <ion-input name="name" type="text" placeholder="Ime i prezime">
+                <ion-icon name="person-outline"></ion-icon>
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input name="email" type="text" placeholder="Broj telefona">
+                <ion-icon name="call-outline"></ion-icon>
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input name="email" type="text" placeholder="Email">
+                <ion-icon name="mail-outline"></ion-icon>
+              </ion-input>
+            </ion-item>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="sign-btn-wrap">
+        <ion-button shape="round" fill="solid" class="sign-btn">Registruj se</ion-button>
+      </div>
+
+      <div class="text-tag">
+        <span>Možeš napraviti nalog i putem:</span>
+      </div>
+
+      <div class="social-btns">
+        <ion-button fill="clear" class="facebookbtn ion-no-padding">
+          <ion-img src="assets/images/facebook.png"></ion-img>
+        </ion-button>
+        <ion-button fill="clear" class="googlebtn ion-no-padding">
+          <ion-img src="assets/images/google.png"></ion-img>
+        </ion-button>
+        <ion-button fill="clear" class="applebtn ion-no-padding">
+          <ion-img src="assets/images/apple.png"></ion-img>
+        </ion-button>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
