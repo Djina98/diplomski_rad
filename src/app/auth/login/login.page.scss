@@ -1,0 +1,12 @@
+ion-header{
+  position: absolute;
+}
+
+ion-toolbar{
+  --ion-background-color: transparent;
+  --opacity: 0;
+}
+
+ion-content{
+  --ion-background-color: hsl(0deg 0% 96%);
+}
