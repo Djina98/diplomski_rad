@@ -47,6 +47,14 @@ ion-card-subtitle{
   text-align: center;
   color: #4b5842;
 
+  .login-btn{
+    color: #4b5842;
+  }
+
+  .signup-btn{
+    color: #4b5842;
+  }
+
   @media(min-width:760px){
     margin-bottom: 190px;
   }
@@ -69,3 +77,5 @@ ion-card-subtitle{
     padding-left: 5px !important;
   }
 }
+
+
