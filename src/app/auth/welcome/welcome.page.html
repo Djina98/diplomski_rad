@@ -18,8 +18,8 @@
 
     <ion-card-content>
       <div class="signin-btns">
-        <ion-button size="small" fill="solid" shape="round" class="login-btn">Uloguj se</ion-button>
-        <ion-button size="small" fill="outline" shape="round" class="signup-btn">Napravi nalog</ion-button>
+        <ion-button size="small" fill="solid" shape="round" (click)="goToLoginPage()" class="login-btn">Uloguj se</ion-button>
+        <ion-button size="small" fill="outline" shape="round" (click)="goToRegisterPage()" class="signup-btn">Napravi nalog</ion-button>
       </div>
 
       <div class="text-tag">
