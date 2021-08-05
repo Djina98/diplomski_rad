@@ -1,3 +1,42 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" contentId="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title color="tertiary">Bee organic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="none">
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/products">
+            <ion-icon name="cart-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>Proizvodi</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="">
+            <ion-icon name="people" slot="start" color="primary"></ion-icon>
+            <ion-label>Korisnici</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="">
+            <ion-icon name="reader-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>Narudžbine</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item>
+            <ion-icon name="log-out" slot="start" color="primary"></ion-icon>
+            <ion-label>Odjavi se</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
