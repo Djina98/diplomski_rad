@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
   constructor(public formBuilder: FormBuilder,
               private authService: AuthService,
               private loadingCtl: LoadingController,
-              private router: Router) { }
+              private router: Router,
+              private nav: NavController) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -56,6 +57,10 @@ export class LoginPage implements OnInit {
 
     }
 
+  }
+
+  goToRegisterPage(){
+    this.nav.navigateForward(['signup']);
   }
 
 }

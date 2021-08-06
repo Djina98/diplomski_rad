@@ -29,7 +29,7 @@ ion-card{
 ion-card-title{
   margin-top: 30px;
   font-size: 20px;
-  color: #4b5842;
+  color: #91684A;
   text-align: center;
   font-weight: bold;
 }
@@ -37,7 +37,7 @@ ion-card-title{
 ion-card-subtitle{
   padding-top: 15px;
   font-size: 11px;
-  color: #4b5842;
+  color: #91684A;
   text-align: center;
   font-weight: 200;
 }
@@ -45,14 +45,14 @@ ion-card-subtitle{
 .signin-btns{
   margin-top: 20px;
   text-align: center;
-  color: #4b5842;
+  color: #91684A;
 
   .login-btn{
-    color: #4b5842;
+    color: #91684A;
   }
 
   .signup-btn{
-    color: #4b5842;
+    color: #91684A;
   }
 
   @media(min-width:760px){
@@ -66,6 +66,7 @@ ion-card-subtitle{
   span{
     font-size: 13px;
     font-weight: normal;
+    color: black;
   }
 
 }
