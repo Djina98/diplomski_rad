@@ -16,6 +16,6 @@ import { ProductItemComponent } from './product-item/product-item.component';
     IonicModule,
     ProductsPageRoutingModule
   ],
-  declarations: [ProductsPage, ProductItemComponent]
+  declarations: [ProductsPage]
 })
 export class ProductsPageModule {}

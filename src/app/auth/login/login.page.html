@@ -12,7 +12,7 @@
   <ion-card class="ion-no-margin">
     <ion-img src="assets/images/header.jpg" class="image"></ion-img>
     <ion-card-content>
-      <form [formGroup]="validationFormUser" (ngSubmit)="loginUser(validationFormUser.value)">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <ion-grid>
           <ion-row>
             <ion-col size-sm="6" offset-sm="3">
@@ -25,9 +25,9 @@
                 <div>
                   <ng-container *ngFor="let validation of validationUserMessage.email">
                     <small
-                      *ngIf="validationFormUser.get('email').hasError(validation.type) &&
-                      (validationFormUser.get('email').dirty ||
-                      validationFormUser.get('email').touched)">
+                      *ngIf="loginForm.get('email').hasError(validation.type) &&
+                      (loginForm.get('email').dirty ||
+                      loginForm.get('email').touched)">
                       {{validation.message}}
                     </small>
                   </ng-container>
@@ -41,9 +41,9 @@
                 <div>
                   <ng-container *ngFor="let validation of validationUserMessage.password">
                     <small
-                      *ngIf="validationFormUser.get('password').hasError(validation.type) &&
-                      (validationFormUser.get('password').dirty ||
-                      validationFormUser.get('password').touched)">
+                      *ngIf="loginForm.get('password').hasError(validation.type) &&
+                      (loginForm.get('password').dirty ||
+                      loginForm.get('password').touched)">
                       {{validation.message}}
                     </small>
                   </ng-container>
@@ -59,7 +59,7 @@
         </ion-grid>
 
         <div class="sign-btn-wrap">
-          <ion-button shape="round" fill="solid" class="sign-btn" [disabled]="!validationFormUser.valid">Uloguj se</ion-button>
+          <ion-button  type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!loginForm.valid">Uloguj se</ion-button>
         </div>
 
         <div class="text-tag">

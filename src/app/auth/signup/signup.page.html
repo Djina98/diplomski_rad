@@ -20,51 +20,77 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size-sm="6" offset-sm="3">
-            <ion-item>
-              <ion-input name="name" type="text" placeholder="Ime i prezime">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item>
                 <ion-icon name="person-outline"></ion-icon>
-              </ion-input>
-            </ion-item>
+                <ion-input name="name" type="text" placeholder="Ime i prezime"></ion-input>
+              </ion-item>
 
-            <ion-item>
-              <ion-input name="email" type="text" placeholder="Broj telefona">
+              <ion-item>
                 <ion-icon name="call-outline"></ion-icon>
-              </ion-input>
-            </ion-item>
+                <ion-input name="email" type="text" placeholder="Broj telefona"></ion-input>
+              </ion-item>
 
-            <ion-item>
-              <ion-input name="email" type="text" placeholder="Email">
+              <ion-item>
                 <ion-icon name="mail-outline"></ion-icon>
-              </ion-input>
-            </ion-item>
+                <ion-input name="email" type="text" formControlName="email" placeholder="Email" required></ion-input>
+              </ion-item>
 
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.email">
+                  <small
+                    *ngIf="registerForm.get('email').hasError(validation.type) &&
+                    (registerForm.get('email').dirty ||
+                    registerForm.get('email').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
 
-      <div class="sign-btn-wrap">
-        <ion-button shape="round" fill="solid" class="sign-btn">Registruj se</ion-button>
-      </div>
+              <ion-item>
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <ion-input type="password" name="password" formControlName="password" placeholder="Lozinka" required></ion-input>
+              </ion-item>
 
-      <div class="text-tag">
-        <span>Možeš napraviti nalog i putem:</span>
-      </div>
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.password">
+                  <small
+                    *ngIf="registerForm.get('password').hasError(validation.type) &&
+                    (registerForm.get('password').dirty ||
+                    registerForm.get('password').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
 
-      <div class="social-btns">
-        <ion-button fill="clear" class="facebookbtn ion-no-padding">
-          <ion-img src="assets/images/facebook.png"></ion-img>
-        </ion-button>
-        <ion-button fill="clear" class="googlebtn ion-no-padding">
-          <ion-img src="assets/images/google.png"></ion-img>
-        </ion-button>
-        <ion-button fill="clear" class="applebtn ion-no-padding">
-          <ion-img src="assets/images/apple.png"></ion-img>
-        </ion-button>
-      </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!registerForm.valid">Registruj se</ion-button>
+        </div>
+
+        <div class="text-tag">
+          <span>Možeš napraviti nalog i putem:</span>
+        </div>
+
+        <div class="social-btns">
+          <ion-button fill="clear" class="facebookbtn ion-no-padding">
+            <ion-img src="assets/images/facebook.png"></ion-img>
+          </ion-button>
+          <ion-button fill="clear" class="googlebtn ion-no-padding">
+            <ion-img src="assets/images/google.png"></ion-img>
+          </ion-button>
+          <ion-button fill="clear" class="applebtn ion-no-padding">
+            <ion-img src="assets/images/apple.png"></ion-img>
+          </ion-button>
+        </div>
+      </form>
     </ion-card-content>
   </ion-card>
 

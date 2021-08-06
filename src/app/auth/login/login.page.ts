@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,6 +10,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
+  isLoading = false;
 
   validationUserMessage = {
     email: [
@@ -19,12 +24,15 @@ export class LoginPage implements OnInit {
     ]
   };
 
-  validationFormUser: FormGroup;
+  loginForm: FormGroup;
 
-  constructor(public formBuilder: FormBuilder) { }
+  constructor(public formBuilder: FormBuilder,
+              private authService: AuthService,
+              private loadingCtl: LoadingController,
+              private router: Router) { }
 
   ngOnInit() {
-    this.validationFormUser = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -36,8 +44,18 @@ export class LoginPage implements OnInit {
     });
   }
 
-  loginUser(value){
-    console.log('Ulogovan');
+  onLogin(){
+    this.isLoading = true;
+    if(this.loginForm.valid){
+      this.authService.login(this.loginForm.value).subscribe(resData => {
+        console.log('Prijava uspešna');
+        console.log(resData);
+        this.isLoading = false;
+        this.router.navigateByUrl('/products');
+      });
+
+    }
+
   }
 
 }

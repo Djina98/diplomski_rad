@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Product } from '../product.model';
-import { ProductsService } from '../products.service';
+import { Product } from '../../product.model';
+import { ProductsService } from '../../products.service';
 
 @Component({
   selector: 'app-product-details',
