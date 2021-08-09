@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,5 +8,192 @@
 </ion-header>
 
 <ion-content>
+  <ion-card class="ion-no-margin">
+    <ion-card-header>
+      <ion-card-title>
+        Novi proizvod
+      </ion-card-title>
 
+      <ion-card-subtitle>
+        Popunjavanjem forme u nastavku dodajete novi proizvod na stanju
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="addProduct" (ngSubmit)="onAddProduct()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Naziv proizvoda</ion-label>
+                <ion-input name="title" type="text" formControlName="title" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.title">
+                  <small
+                    *ngIf="addProduct.get('title').hasError(validation.type) &&
+                    (addProduct.get('title').dirty ||
+                    addProduct.get('title').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label  position="floating" color="primary">Vrsta meda</ion-label>
+                <ion-select name="type" type="text" formControlName="type"
+                            cancelText="Nazad" okText="Izaberi" required>
+                  <ion-select-option class="option" *ngFor="let name of typesKeys" [value]="name">{{honeyTypes[name]}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.type">
+                  <small
+                    *ngIf="addProduct.get('type').hasError(validation.type) &&
+                    (addProduct.get('type').dirty ||
+                    addProduct.get('type').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Opis proizvoda</ion-label>
+                <ion-textarea name="description" type="text" formControlName="description" required>
+                </ion-textarea>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.description">
+                  <small
+                    *ngIf="addProduct.get('description').hasError(validation.type) &&
+                    (addProduct.get('description').dirty ||
+                    addProduct.get('description').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Količina u gramima</ion-label>
+                <ion-input name="amount" type="number" formControlName="amount" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.amount">
+                  <small
+                    *ngIf="addProduct.get('amount').hasError(validation.type) &&
+                    (addProduct.get('amount').dirty ||
+                    addProduct.get('amount').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Cena</ion-label>
+                <ion-input type="number" name="price" formControlName="price" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.price">
+                  <small
+                    *ngIf="addProduct.get('price').hasError(validation.type) &&
+                    (addProduct.get('price').dirty ||
+                    addProduct.get('price').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Godina proizvodnje</ion-label>
+                <ion-input type="number" name="yearOfProduction" formControlName="yearOfProduction" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.yearOfProduction">
+                  <small
+                    *ngIf="addProduct.get('yearOfProduction').hasError(validation.type) &&
+                    (addProduct.get('yearOfProduction').dirty ||
+                    addProduct.get('yearOfProduction').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Tip ambalaže</ion-label>
+                <ion-select name="packaging" type="text" formControlName="packaging"
+                            cancelText="Nazad" okText="Izaberi" required>
+                  <ion-select-option *ngFor="let name of packagingKeys" [value]="name">{{packaging[name]}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.packaging">
+                  <small
+                    *ngIf="addProduct.get('packaging').hasError(validation.type) &&
+                    (addProduct.get('packaging').dirty ||
+                    addProduct.get('packaging').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Proizvođač</ion-label>
+                <ion-select name="producer" type="text" formControlName="producer"
+                            cancelText="Nazad" okText="Izaberi"required>
+                  <ion-select-option *ngFor="let producer of producers" [value]="producer">{{producer.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.producer">
+                  <small
+                    *ngIf="addProduct.get('producer').hasError(validation.type) &&
+                    (addProduct.get('producer').dirty ||
+                    addProduct.get('producer').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">URL adresa slike proizvoda</ion-label>
+                <ion-input type="text" name="imageUrl" formControlName="imageUrl" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.imageUrl">
+                  <small
+                    *ngIf="addProduct.get('imageUrl').hasError(validation.type) &&
+                    (addProduct.get('imageUrl').dirty ||
+                    addProduct.get('imageUrl').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!addProduct.valid">Sačuvaj</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+

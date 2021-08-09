@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Producer } from '../producers/producer.model';
+import { ProducersService } from '../producers/producers.service';
 import { HoneyTypes, Packaging, Product } from './product.model';
 
 @Injectable({
@@ -20,6 +22,7 @@ export class ProductsService {
                     Kristalizacija je svojstvo svakog prirodnog meda.`,
       yearOfProduction: 2021,
       packaging: Packaging.staklenaTeglica,
+      producer: this.producersService.getAllProducers[1],
       imageUrl: 'https://www.timomed.co.rs/images/proizvodi/Organski-med.png'
     },
     {
@@ -35,11 +38,12 @@ export class ProductsService {
                     Kristalizacija je svojstvo svakog prirodnog meda.`,
       yearOfProduction: 2021,
       packaging: Packaging.staklenaTeglica,
+      producer: this.producersService.getAllProducers[1],
       imageUrl: 'https://www.timomed.co.rs/images/proizvodi/Organski-med.png'
     }
   ];
 
-  constructor() { }
+  constructor(private producersService: ProducersService) { }
 
   getAllProducts() {
     return [...this.products];

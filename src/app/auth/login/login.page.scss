@@ -33,7 +33,7 @@ ion-content{
 ion-item{
   color: #FFDF91;
   --border-color: #FFDF91;
-  --highlight-color-focused: #91684A;
+  --highlight-color-focused: #432818;
   --padding-start: 0;
   --inner-padding-end: 0;
   font-size: 12px;
@@ -58,7 +58,7 @@ ion-item{
 
   ion-button{
     font-size: 9px;
-    color: black;
+    color: #432818;
     font-weight: bold;
   }
 }
@@ -68,10 +68,10 @@ ion-item{
   padding-top: 20px;
   .sign-btn{
     --ion-primary-color: #FFDF91;
-    --background-activated: #91684A;
-    --background-focused: #91684A;
-    --background-hover: #383a3e;
-    color: #91684A;
+    --background-activated: #432818;
+    --background-focused: #432818;
+    --background-hover: white;
+    color: #432818;
     border-radius: 25px;
     --background: #FFDF91;
     background-color: #FFDF91;
@@ -88,7 +88,7 @@ ion-item{
   span{
     font-size: 13px;
     font-weight: normal;
-    color: black;
+    color: #432818;
   }
 
 }
@@ -111,6 +111,7 @@ ion-item{
   display: flex;
 
   span{
+    color: #432818;
     font-size: 12px;
     font-weight: 200;
   }
@@ -124,10 +125,7 @@ ion-item{
   }
 
   button:hover{
-    color:#91684A;
+    color:#432818;
   }
 }
 
-small {
-  color: red;
-}

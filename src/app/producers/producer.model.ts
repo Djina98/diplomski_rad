@@ -3,11 +3,11 @@ export interface Producer {
   name: string;
   description: string;
   address: string;
-  phoneNumber: number;
-  taxIdentificationNumber: number;
-  companyNumber: number;
+  phoneNumber: string;
+  taxIdentificationNumber: string;
+  companyNumber: string;
   website: string;
-  sertificate: Sertificate;
+  sertificate?: Sertificate;
 }
 
 export interface Sertificate{

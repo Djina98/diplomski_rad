@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/quotes */
+import { Producer } from "../producers/producer.model";
+
 export interface Product {
     id: string;
     title: string;
     type: HoneyTypes;
+    description: string;
     amount: number;
     price: number;
-    description: string;
     yearOfProduction: number;
     packaging: Packaging;
+    producer: Producer;
     imageUrl: string;
 }
 

@@ -12,6 +12,16 @@ import { AuthService } from '../auth.service';
 export class SignupPage implements OnInit {
 
   validationUserMessage = {
+    fullname: [
+      {type: 'required', message:'Unesite Vaše ime i prezime'},
+    ],
+    phoneNumber: [
+      {type: 'required', message:'Unesite broj Vašeg mobilnog telefona'},
+      {type: 'minlength', message: 'Broj mobilnog telefona mora da ima minimum 9 cifara'}
+    ],
+    address: [
+      {type: 'required', message:'Unesite Vašu kućnu adresu'},
+    ],
     email: [
       {type: 'required', message:'Unesite Vašu email adresu'},
       {type: 'pattern', message: 'Email adresa nije ispravna. Pokušajte ponovo'}
@@ -32,6 +42,16 @@ export class SignupPage implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
+      fullname: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      phoneNumber: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(9)
+      ])),
+      address: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -51,6 +71,9 @@ export class SignupPage implements OnInit {
         this.authService.register(this.registerForm.value).subscribe(resData => {
           console.log('Uspešna registracija');
           console.log(resData);
+        });
+        this.authService.addUser(this.registerForm.value).subscribe(res => {
+          console.log(res);
         });
         loadingEl.dismiss();
         this.router.navigateByUrl('/products');

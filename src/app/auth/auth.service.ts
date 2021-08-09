@@ -17,11 +17,12 @@ interface AuthResponseData {
 }
 
 interface UserData {
-  fullname?: string;
+  fullname: string;
   phoneNumber: number;
+  address: string;
   email: string;
   password: string;
-
+  role: string;
 }
 
 @Injectable({
@@ -29,6 +30,8 @@ interface UserData {
 })
 export class AuthService {
 
+  private userRole = 'user';
+  private adminRole = 'admin';
   private isUserAuthenticated = false;
   private user = new BehaviorSubject<User>(null);
 
@@ -65,5 +68,21 @@ export class AuthService {
 
   logout() {
     this.user.next(null);
+  }
+
+  addUser(user: UserData){
+    if(user.email === 'admin@admin.com'){
+      return this.http.post<{name: string}>(
+        'https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+          fullname: user.fullname, phoneNumber: user.phoneNumber, address: user.address,
+          email: user.email, role: this.adminRole
+      });
+    }else{
+      return this.http.post<{name: string}>(
+        'https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+          fullname: user.fullname, phoneNumber: user.phoneNumber, address: user.address,
+          email: user.email, role: this.userRole
+      });
+    }
   }
 }

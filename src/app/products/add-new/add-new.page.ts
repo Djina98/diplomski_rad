@@ -1,4 +1,13 @@
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable no-trailing-spaces */
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
+import { HoneyTypes, Packaging } from '../product.model';
+import { Producer } from "../../producers/producer.model";
+import { ProducersService } from 'src/app/producers/producers.service';
 
 @Component({
   selector: 'app-add-new',
@@ -7,9 +16,87 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewPage implements OnInit {
 
-  constructor() { }
+  honeyTypes = HoneyTypes;
+  packaging = Packaging;
+  producers: Producer[];
+  typesKeys = [];
+  packagingKeys = [];
+
+  validationUserMessage = {
+    title: [
+      {type: 'required', message:'Unesite naziv proizvoda'},
+    ],
+    description: [
+      {type: 'required', message:'Unesite kratak opis proizvoda'},
+    ],
+    type: [
+      {type: 'required', message:'Izaberite vrstu meda'},
+    ],
+    amount: [
+      {type: 'required', message:'Unesite količinu u gramima'},
+    ],
+    price: [
+      {type: 'required', message:'Unesite cenu za datu količinu'},
+    ],
+    yearOfProduction: [
+      {type: 'required', message:'Unesite godinu proizvodnje'},
+    ],
+    packaging: [
+      {type: 'required', message:'Izaberite tip ambalaže'},
+    ],
+    producer: [
+      {type: 'required', message:'Izaberite proizvođača'},
+    ],
+    imageUrl: [
+      {type: 'required', message:'Unesite URL adresu slike proizvoda'},
+    ]
+  };
+
+  addProduct: FormGroup;
+
+  constructor(public formBuilder: FormBuilder,
+              private authService: AuthService,
+              private loadingCtl: LoadingController,
+              private router: Router,
+              private producersService: ProducersService) {
+                this.typesKeys=Object.keys(this.honeyTypes);
+                this.packagingKeys=Object.keys(this.packaging);
+              }
+
 
   ngOnInit() {
+    this.producers = this.producersService.getAllProducers();
+    this.addProduct = this.formBuilder.group({
+      title: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      description: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      type: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      amount: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      price: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      packaging: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      producer: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      yearOfProduction: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      imageUrl: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+    });
   }
+
+  onAddProduct() {}
 
 }
