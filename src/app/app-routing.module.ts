@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -7,7 +8,8 @@ const routes: Routes = [
   },
   {
     path: 'products',
-    loadChildren: () => import('./products/products.module').then( m => m.ProductsPageModule)
+    loadChildren: () => import('./products/products.module').then( m => m.ProductsPageModule),
+    //canLoad: [AuthGuard]
   },
   {
     path: 'welcome',
@@ -23,7 +25,8 @@ const routes: Routes = [
   },
   {
     path: 'producers',
-    loadChildren: () => import('./producers/producers.module').then( m => m.ProducersPageModule)
+    loadChildren: () => import('./producers/producers.module').then( m => m.ProducersPageModule),
+    //canLoad: [AuthGuard]
   }
 ];
 @NgModule({

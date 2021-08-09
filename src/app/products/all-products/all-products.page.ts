@@ -14,7 +14,27 @@ export class AllProductsPage implements OnInit {
   constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
-    this.products = this.productsService.getAllProducts();
+    this.productsService.getProducts().subscribe(productData => {
+      console.log(productData);
+      const products: Product[] = [];
+
+      for(const key in productData){
+        if(productData.hasOwnProperty(key)){
+          products.push({
+            id: key,
+            title: productData[key].title,
+            type: productData[key].type,
+            description: productData[key].description,
+            amount: productData[key].amount,
+            price: productData[key].price,
+            yearOfProduction: productData[key].yearOfProduction,
+            packaging: productData[key].packaging,
+            imageUrl: productData[key].imageUrl,
+          });
+        }
+      }
+      this.products = products;
+    });
   }
 
 }

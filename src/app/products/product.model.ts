@@ -10,7 +10,7 @@ export interface Product {
     price: number;
     yearOfProduction: number;
     packaging: Packaging;
-    producer: Producer;
+    //producer: Producer;
     imageUrl: string;
 }
 

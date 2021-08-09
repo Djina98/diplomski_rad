@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -32,13 +33,17 @@ export class AuthService {
 
   private userRole = 'user';
   private adminRole = 'admin';
-  private isUserAuthenticated = false;
+  private _isUserAuthenticated = false;
   private user = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) { }
 
+  get isUserAuthenticated(): boolean{
+    return this._isUserAuthenticated;
+  }
+
   register(user: UserData){
-    this.isUserAuthenticated = true;
+    this._isUserAuthenticated = true;
     return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,
               {email: user.email, password: user.password, returnSecureToken: true})
             .pipe(
@@ -53,7 +58,7 @@ export class AuthService {
   }
 
   login(user: UserData){
-    this.isUserAuthenticated = true;
+    this._isUserAuthenticated = true;
     return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
                                             ${environment.firebaseAPIKey}`,
               {email: user.email, password: user.password, returnSecureToken: true})

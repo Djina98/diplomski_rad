@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { HoneyTypes, Packaging } from '../product.model';
 import { Producer } from "../../producers/producer.model";
 import { ProducersService } from 'src/app/producers/producers.service';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-add-new',
@@ -44,9 +45,10 @@ export class AddNewPage implements OnInit {
     packaging: [
       {type: 'required', message:'Izaberite tip ambalaže'},
     ],
+    /*
     producer: [
       {type: 'required', message:'Izaberite proizvođača'},
-    ],
+    ],*/
     imageUrl: [
       {type: 'required', message:'Unesite URL adresu slike proizvoda'},
     ]
@@ -58,7 +60,8 @@ export class AddNewPage implements OnInit {
               private authService: AuthService,
               private loadingCtl: LoadingController,
               private router: Router,
-              private producersService: ProducersService) {
+              private producersService: ProducersService,
+              private productsService: ProductsService) {
                 this.typesKeys=Object.keys(this.honeyTypes);
                 this.packagingKeys=Object.keys(this.packaging);
               }
@@ -85,9 +88,10 @@ export class AddNewPage implements OnInit {
       packaging: new FormControl('', Validators.compose([
         Validators.required,
       ])),
+      /*
       producer: new FormControl('', Validators.compose([
         Validators.required,
-      ])),
+      ])),*/
       yearOfProduction: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -97,6 +101,16 @@ export class AddNewPage implements OnInit {
     });
   }
 
-  onAddProduct() {}
+  onAddProduct() {
+    this.productsService.addProduct(this.addProduct.value.title, this.addProduct.value.type,
+    this.addProduct.value.description, this.addProduct.value.amount,
+    this.addProduct.value.price, this.addProduct.value.yearOfProduction,
+    this.addProduct.value.packaging, this.addProduct.value.imageUrl).subscribe(res => {
+      console.log(res);
+    });
+
+    this.router.navigateByUrl('/products/tabs/all-products');
+    this.addProduct.reset();
+  }
 
 }
