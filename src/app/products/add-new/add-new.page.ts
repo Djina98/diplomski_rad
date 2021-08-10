@@ -105,8 +105,8 @@ export class AddNewPage implements OnInit {
     this.productsService.addProduct(this.addProduct.value.title, this.addProduct.value.type,
     this.addProduct.value.description, this.addProduct.value.amount,
     this.addProduct.value.price, this.addProduct.value.yearOfProduction,
-    this.addProduct.value.packaging, this.addProduct.value.imageUrl).subscribe(res => {
-      console.log(res);
+    this.addProduct.value.packaging, this.addProduct.value.imageUrl).subscribe(products => {
+      console.log(products);
     });
 
     this.router.navigateByUrl('/products/tabs/all-products');

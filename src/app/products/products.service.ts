@@ -1,7 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Producer } from '../producers/producer.model';
 import { ProducersService } from '../producers/producers.service';
 import { HoneyTypes, Packaging, Product } from './product.model';
@@ -23,7 +26,9 @@ interface ProductData {
 
 export class ProductsService {
 
-  private products: Product[]  = [
+  private _products = new BehaviorSubject<Product[]>([]);
+
+  /*private products: Product[]  = [
     {
       id: '1',
       title: 'Med sa ekstraktom crvenog grožđa',
@@ -56,10 +61,15 @@ export class ProductsService {
       //producer: this.producersService.getAllProducers[1],
       imageUrl: 'https://www.timomed.co.rs/images/proizvodi/Organski-med.png'
     }
-  ];
+  ];*/
 
   constructor(private producersService: ProducersService, private http: HttpClient) { }
 
+  get products() {
+    return this._products.asObservable();
+  }
+
+  /*
   getAllProducts() {
     return [...this.products];
   }
@@ -69,15 +79,11 @@ export class ProductsService {
       ...this.products.find(product => product.id === productId)
     };
   }
-
-  deleteProduct(productId: string){
-    this.products = this.products.filter(product =>
-      product.id !== productId
-    );
-  }
-
+  */
   addProduct(title: string, type: HoneyTypes, amount: number, price: number, description: string,
             yearOfProduction: number, packaging: Packaging, imageUrl: string) {
+              let generatedId;
+
               return this.http.post<{name: string}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`,
               {title,
                 type,
@@ -87,10 +93,49 @@ export class ProductsService {
                 yearOfProduction,
                 packaging,
                 imageUrl
-              });
+              }).pipe(switchMap((resData) => {
+
+                generatedId = resData.name;
+                return this.products;
+
+              }), take(1), tap(products => {
+                this._products.next(products.concat({
+                  id: generatedId,
+                  title,
+                  type,
+                  amount,
+                  price,
+                  description,
+                  yearOfProduction,
+                  packaging,
+                  imageUrl
+                }));
+              }));
   }
 
   getProducts() {
-    return this.http.get<{[key: string]: ProductData}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`);
+    return this.http.
+    get<{[key: string]: ProductData}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`)
+    .pipe(map((productData) => {
+      const products: Product[] = [];
+
+      for(const key in productData){
+        if(productData.hasOwnProperty(key)){
+          products.push({
+            id: key,
+            title: productData[key].title,
+            type: productData[key].type,
+            description: productData[key].description,
+            amount: productData[key].amount,
+            price: productData[key].price,
+            yearOfProduction: productData[key].yearOfProduction,
+            packaging: productData[key].packaging,
+            imageUrl: productData[key].imageUrl,
+          });
+        }
+      }
+      this._products.next(products);
+      return products;
+    }));
   }
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 
@@ -7,34 +8,30 @@ import { ProductsService } from '../products.service';
   templateUrl: './all-products.page.html',
   styleUrls: ['./all-products.page.scss'],
 })
-export class AllProductsPage implements OnInit {
+export class AllProductsPage implements OnInit, OnDestroy {
 
   products: Product[];
+  private productsSub: Subscription;
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
-    this.productsService.getProducts().subscribe(productData => {
-      console.log(productData);
-      const products: Product[] = [];
-
-      for(const key in productData){
-        if(productData.hasOwnProperty(key)){
-          products.push({
-            id: key,
-            title: productData[key].title,
-            type: productData[key].type,
-            description: productData[key].description,
-            amount: productData[key].amount,
-            price: productData[key].price,
-            yearOfProduction: productData[key].yearOfProduction,
-            packaging: productData[key].packaging,
-            imageUrl: productData[key].imageUrl,
-          });
-        }
-      }
+    this.productsSub = this.productsService.products.subscribe(products => {
+      console.log(products);
       this.products = products;
     });
   }
+
+  ionViewWillEnter() {
+    this.productsService.getProducts().subscribe(performances => {
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.productsSub) {
+      this.productsSub.unsubscribe();
+    }
+  }
+
 
 }
