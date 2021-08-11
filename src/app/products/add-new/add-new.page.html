@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="tertiary">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="tertiary"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Bee Organic</ion-title>
+    <ion-title color="tertiary">Bee Organic</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -27,16 +27,16 @@
 
               <ion-item>
                 <ion-label position="floating" color="primary">Naziv proizvoda</ion-label>
-                <ion-input name="title" type="text" formControlName="title" required>
+                <ion-input name="name" type="text" formControlName="name" required>
                 </ion-input>
               </ion-item>
 
               <div>
-                <ng-container *ngFor="let validation of validationUserMessage.title">
+                <ng-container *ngFor="let validation of validationUserMessage.name">
                   <small
-                    *ngIf="addProduct.get('title').hasError(validation.type) &&
-                    (addProduct.get('title').dirty ||
-                    addProduct.get('title').touched)">
+                    *ngIf="addProduct.get('name').hasError(validation.type) &&
+                    (addProduct.get('name').dirty ||
+                    addProduct.get('name').touched)">
                     {{validation.message}}
                   </small>
                 </ng-container>

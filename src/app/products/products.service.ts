@@ -11,7 +11,7 @@ import { ProducersService } from '../producers/producers.service';
 import { HoneyTypes, Packaging, Product } from './product.model';
 
 interface ProductData {
-  title: string;
+  name: string;
   type: HoneyTypes;
   amount: number;
   price: number;
@@ -81,12 +81,12 @@ export class ProductsService {
     };
   }
   */
-  addProduct(title: string, type: HoneyTypes, description: string, amount: number, price: number,
+  addProduct(name: string, type: HoneyTypes, description: string, amount: number, price: number,
             yearOfProduction: number, packaging: Packaging, imageUrl: string) {
               let generatedId;
 
               return this.http.post<{name: string}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`,
-              { title,
+              { name,
                 type,
                 description,
                 amount,
@@ -102,7 +102,7 @@ export class ProductsService {
               }), take(1), tap(products => {
                 this._products.next(products.concat({
                   id: generatedId,
-                  title,
+                  name,
                   type,
                   amount,
                   price,
@@ -124,7 +124,7 @@ export class ProductsService {
         if(productData.hasOwnProperty(key)){
           products.push({
             id: key,
-            title: productData[key].title,
+            name: productData[key].name,
             type: productData[key].type,
             description: productData[key].description,
             amount: productData[key].amount,
@@ -147,7 +147,7 @@ export class ProductsService {
       .pipe(map((resData: ProductData) => {
         return new Product(
           id,
-          resData.title,
+          resData.name,
           resData.type,
           resData.description,
           resData.amount,
@@ -174,7 +174,7 @@ export class ProductsService {
 
   editProduct(
     id: string,
-    title: string,
+    name: string,
     type: HoneyTypes,
     description: string,
     amount: number,
@@ -187,7 +187,7 @@ export class ProductsService {
       return this.http
       .put(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`,
         {
-          title,
+          name,
           type,
           description,
           amount,
@@ -206,7 +206,7 @@ export class ProductsService {
         const updatedProducts = [...products];
         updatedProducts[updatedProductIndex] = new Product(
           id,
-          title,
+          name,
           type,
           description,
           amount,

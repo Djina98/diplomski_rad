@@ -3,7 +3,7 @@
 import { Producer } from "../producers/producer.model";
 
 export class Product implements Product{
-  constructor(public id: string, public title: string, public type: HoneyTypes,
+  constructor(public id: string, public name: string, public type: HoneyTypes,
               public description: string, public amount: number,
               public price: number, public yearOfProduction: number,
               public packaging: Packaging, public imageUrl: string) { }
@@ -11,7 +11,7 @@ export class Product implements Product{
 
 export interface Product {
     id: string;
-    title: string;
+    name: string;
     type: HoneyTypes;
     description: string;
     amount: number;

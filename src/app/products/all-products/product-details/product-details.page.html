@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
     </ion-buttons>
-    <ion-title color="tertiary" class="ion-text-center">Detalji o proizvodu</ion-title>
+    <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
     <ion-buttons slot="primary">
-      <ion-fab-button size="small" color="tertiary" (click)="onEditProduct()">
-        <ion-icon name="pencil"></ion-icon>
-      </ion-fab-button>
+      <ion-button (click)="onEditProduct()">
+        <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
       <ion-button (click)="onDeleteProduct()">
         <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
       </ion-button>
@@ -23,14 +23,14 @@
 
   <ion-grid *ngIf="!isLoading" no-padding>
     <ion-row>
-      <ion-col no-padding>
+      <ion-col class="ion-text-center" no-padding>
         <img [src]="product.imageUrl">
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <h5>{{product.title}}</h5>
+        <h5>{{product.name}}</h5>
       </ion-col>
     </ion-row>
 

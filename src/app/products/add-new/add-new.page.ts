@@ -24,7 +24,7 @@ export class AddNewPage implements OnInit {
   packagingKeys = [];
 
   validationUserMessage = {
-    title: [
+    name: [
       {type: 'required', message:'Unesite naziv proizvoda'},
     ],
     description: [
@@ -70,7 +70,7 @@ export class AddNewPage implements OnInit {
   ngOnInit() {
     this.producers = this.producersService.getAllProducers();
     this.addProduct = this.formBuilder.group({
-      title: new FormControl('', Validators.compose([
+      name: new FormControl('', Validators.compose([
         Validators.required
       ])),
       description: new FormControl('', Validators.compose([
