@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
@@ -80,16 +81,16 @@ export class ProductsService {
     };
   }
   */
-  addProduct(title: string, type: HoneyTypes, amount: number, price: number, description: string,
+  addProduct(title: string, type: HoneyTypes, description: string, amount: number, price: number,
             yearOfProduction: number, packaging: Packaging, imageUrl: string) {
               let generatedId;
 
               return this.http.post<{name: string}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`,
-              {title,
+              { title,
                 type,
+                description,
                 amount,
                 price,
-                description,
                 yearOfProduction,
                 packaging,
                 imageUrl
@@ -137,5 +138,85 @@ export class ProductsService {
       this._products.next(products);
       return products;
     }));
+  }
+
+  getProduct(id: string) {
+    return this.http
+    .get<ProductData>(
+      `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`)
+      .pipe(map((resData: ProductData) => {
+        return new Product(
+          id,
+          resData.title,
+          resData.type,
+          resData.description,
+          resData.amount,
+          resData.price,
+          resData.yearOfProduction,
+          resData.packaging,
+          resData.imageUrl
+        );
+      }));
+  }
+
+  deleteProduct(id: string) {
+        return this.http.delete(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`)
+        .pipe(switchMap(() => {
+          return this.products;
+        }),
+        take(1),
+        tap((products) => {
+          this._products.next(products.filter((p) => p.id !== id));
+        })
+      );
+  }
+
+  editProduct(
+    id: string,
+    title: string,
+    type: HoneyTypes,
+    description: string,
+    amount: number,
+    price: number,
+    yearOfProduction: number,
+    packaging: Packaging,
+    imageUrl: string,
+  )
+    {
+      return this.http
+      .put(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`,
+        {
+          title,
+          type,
+          description,
+          amount,
+          price,
+          yearOfProduction,
+          packaging,
+          imageUrl
+        }
+      )
+      .pipe(switchMap(() => {
+        return this.products;
+      }),
+      take(1),
+      tap((products) => {
+        const updatedProductIndex = products.findIndex((p) => p.id === id);
+        const updatedProducts = [...products];
+        updatedProducts[updatedProductIndex] = new Product(
+          id,
+          title,
+          type,
+          description,
+          amount,
+          price,
+          yearOfProduction,
+          packaging,
+          imageUrl
+        );
+        this._products.next(updatedProducts);
+      })
+    );
   }
 }

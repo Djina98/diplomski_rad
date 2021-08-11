@@ -12,6 +12,7 @@
     <app-product-item
       *ngFor="let product of products"
       [productItem]="product"
+      [routerLink]="['/', 'products', 'tabs', 'all-products', product.id]"
     >
     </app-product-item>
   </ion-list>

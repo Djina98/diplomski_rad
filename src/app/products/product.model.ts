@@ -1,5 +1,13 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/quotes */
 import { Producer } from "../producers/producer.model";
+
+export class Product implements Product{
+  constructor(public id: string, public title: string, public type: HoneyTypes,
+              public description: string, public amount: number,
+              public price: number, public yearOfProduction: number,
+              public packaging: Packaging, public imageUrl: string) { }
+}
 
 export interface Product {
     id: string;
