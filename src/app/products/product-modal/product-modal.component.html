@@ -13,87 +13,83 @@
   <ion-card class="ion-no-margin">
 
     <ion-card-content>
-      <form #f="ngForm" (ngSubmit)="onEditProduct()">
+      <form #editProduct="ngForm" (ngSubmit)="onEditProduct()">
         <ion-grid>
           <ion-row>
             <ion-col size-sm="6" offset-sm="3">
 
               <ion-item>
                 <ion-label position="floating" color="primary">Naziv proizvoda</ion-label>
-                <ion-input type="text" name="name" [ngModel]='name' required>
+                <ion-input type="text" [ngModel]='name' name="name" required>
                 </ion-input>
               </ion-item>
-
-              <div *ngIf="f.controls.name.invalid && f.controls.name.touched">
+              <!--
+              <div *ngIf="editProduct.controls.name.invalid && editProduct.controls.name.touched">
                   <small>Unesite naziv proizvoda</small>
               </div>
-
+              -->
               <ion-item>
                 <ion-label  position="floating" color="primary">Vrsta meda</ion-label>
-                <ion-select name="type" type="text" [ngModel]='type'
-                            cancelText="Nazad" okText="Izaberi" required>
+                <ion-select type="text" cancelText="Nazad" okText="Izaberi" [ngModel]='type' name="type" required>
                   <ion-select-option class="option" *ngFor="let name of typesKeys" [value]="name">{{honeyTypes[name]}}</ion-select-option>
                 </ion-select>
               </ion-item>
-
-              <div *ngIf="f.controls.type.invalid && f.controls.type.touched">
+<!--
+              <div *ngIf="editProduct.controls.type.invalid && editProduct.controls.type.touched">
                   <small>Izaberite vrstu meda</small>
-
               </div>
-
+-->
               <ion-item>
                 <ion-label position="floating" color="primary">Opis proizvoda</ion-label>
-                <ion-textarea name="description" type="text" [ngModel]='description' required>
+                <ion-textarea rows="6" type="text" [ngModel]='description' name="description" required>
                 </ion-textarea>
               </ion-item>
-
-              <div *ngIf="f.controls.description.invalid && f.controls.description.touched">
+<!--
+              <div *ngIf="editProduct.controls.description.invalid && editProduct.controls.description.touched">
                   <small>Unesite kratak opis proizvoda</small>
-
               </div>
-
+-->
               <ion-item>
                 <ion-label position="floating" color="primary">Količina u gramima</ion-label>
-                <ion-input name="amount" type="number" [ngModel]='amount' required>
+                <ion-input type="number" [ngModel]='amount' name="amount" required>
                 </ion-input>
               </ion-item>
-
-              <div *ngIf="f.controls.amount.invalid && f.controls.amount.touched">
+<!--
+              <div *ngIf="editProduct.controls.amount.invalid && editProduct.controls.amount.touched">
                   <small>Unesite količinu u gramima</small>
               </div>
-
+-->
               <ion-item>
                 <ion-label position="floating" color="primary">Cena u dinarima</ion-label>
-                <ion-input type="number" name="price" [ngModel]='price' required>
+                <ion-input type="number" [ngModel]='price' name="price" required>
                 </ion-input>
               </ion-item>
-
-              <div *ngIf="f.controls.price.invalid && f.controls.price.touched">
+<!--
+              <div *ngIf="editProduct.controls.price.invalid && editProduct.controls.price.touched">
                   <small>Unesite cenu za datu količinu</small>
               </div>
-
+-->
               <ion-item>
                 <ion-label position="floating" color="primary">Godina proizvodnje</ion-label>
-                <ion-input type="number" name="yearOfProduction" [ngModel]='yearOfProduction' required>
+                <ion-input type="number" [ngModel]='yearOfProduction' name="yearOfProduction" required>
                 </ion-input>
               </ion-item>
-
-              <div *ngIf="f.controls.yearOfProduction.invalid && f.controls.yearOfProductiontouched">
+<!--
+              <div *ngIf="editProduct.controls.yearOfProduction.invalid && editProduct.controls.yearOfProduction.touched">
                   <small>Unesite godinu proizvodnje</small>
               </div>
-
+-->
               <ion-item>
                 <ion-label position="floating" color="primary">Tip ambalaže</ion-label>
-                <ion-select name="packaging" type="text"
-                            cancelText="Nazad" okText="Izaberi" [ngModel]='packaging' required>
+                <ion-select type="text" cancelText="Nazad" okText="Izaberi" [ngModel]='packaging' name="packaging" required>
                   <ion-select-option *ngFor="let name of packagingKeys" [value]="name">{{packagingType[name]}}</ion-select-option>
                 </ion-select>
               </ion-item>
-
-              <div *ngIf="f.controls.packaging.invalid && f.controls.packaging.touched">
+<!--
+              <div *ngIf="editProduct.controls.packaging.invalid && editProduct.controls.packaging.touched">
                   <small>Izaberite tip ambalaže</small>
               </div>
-
+-->
               <!--
               <ion-item>
                 <ion-label position="floating" color="primary">Proizvođač</ion-label>
@@ -116,14 +112,14 @@
             -->
               <ion-item>
                 <ion-label position="floating" color="primary">URL adresa slike proizvoda</ion-label>
-                <ion-input type="text" name="imageUrl" [ngModel]='imageUrl' required>
+                <ion-input type="text" [ngModel]='imageUrl' name="imageUrl" required>
                 </ion-input>
               </ion-item>
-
-              <div *ngIf="f.controls.imageUrl.invalid && f.controls.imageUrl.touched">
+<!--
+              <div *ngIf="editProduct.controls.imageUrl.invalid && editProduct.controls.imageUrl.touched">
                   <small>Unesite URL adresu slike proizvoda</small>
               </div>
-
+-->
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -22,7 +22,7 @@ export class ProductModalComponent implements OnInit {
   @Input() yearOfProduction: number;
   @Input() packaging: Packaging;
   @Input() imageUrl: string;
-  @ViewChild('f', { static: true }) editProduct: NgForm;
+  @ViewChild('editProduct', { static: true }) editProduct: NgForm;
 
   honeyTypes = HoneyTypes;
   packagingType = Packaging;
@@ -32,18 +32,13 @@ export class ProductModalComponent implements OnInit {
 
 
 
-  constructor(public formBuilder: FormBuilder,
-              private authService: AuthService,
-              private producersService: ProducersService,
-              private productsService: ProductsService,
-              private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController) {
                 this.typesKeys=Object.keys(this.honeyTypes);
                 this.packagingKeys=Object.keys(this.packagingType);
               }
 
 
   ngOnInit() {
-
   }
 
   onCancel() {

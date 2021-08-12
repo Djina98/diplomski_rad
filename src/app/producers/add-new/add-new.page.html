@@ -1,12 +1,174 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="tertiary"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Bee Organic</ion-title>
+    <ion-title color="tertiary">Bee Organic</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card class="ion-no-margin">
+    <ion-card-header>
+      <ion-card-title>
+        Novi proizvođač
+      </ion-card-title>
 
+      <ion-card-subtitle>
+        Popunjavanjem forme u nastavku dodajete novog proizvođača organskog meda
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="addProducer" (ngSubmit)="onAddProducer()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Naziv proizvođača</ion-label>
+                <ion-input name="name" type="text" formControlName="name" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.name">
+                  <small
+                    *ngIf="addProducer.get('name').hasError(validation.type) &&
+                    (addProducer.get('name').dirty ||
+                    addProducer.get('name').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Opis proizvođača</ion-label>
+                <ion-textarea rows="6" name="description" type="text" formControlName="description" required>
+                </ion-textarea>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.description">
+                  <small
+                    *ngIf="addProducer.get('description').hasError(validation.type) &&
+                    (addProducer.get('description').dirty ||
+                    addProducer.get('description').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Adresa kompanije</ion-label>
+                <ion-input name="address" type="text" formControlName="address" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.address">
+                  <small
+                    *ngIf="addProducer.get('address').hasError(validation.type) &&
+                    (addProducer.get('address').dirty ||
+                    addProducer.get('address').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Kontakt telefon</ion-label>
+                <ion-input type="text" name="phoneNumber" formControlName="phoneNumber" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.phoneNumber">
+                  <small
+                    *ngIf="addProducer.get('phoneNumber').hasError(validation.type) &&
+                    (addProducer.get('phoneNumber').dirty ||
+                    addProducer.get('phoneNumber').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">PIB broj kompanije</ion-label>
+                <ion-input type="text" name="taxIdentificationNumber" formControlName="taxIdentificationNumber" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.taxIdentificationNumber">
+                  <small
+                    *ngIf="addProducer.get('taxIdentificationNumber').hasError(validation.type) &&
+                    (addProducer.get('taxIdentificationNumber').dirty ||
+                    addProducer.get('taxIdentificationNumber').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Matični broj kompanije</ion-label>
+                <ion-input type="text" name="companyNumber" formControlName="companyNumber" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.companyNumber">
+                  <small
+                    *ngIf="addProducer.get('companyNumber').hasError(validation.type) &&
+                    (addProducer.get('companyNumber').dirty ||
+                    addProducer.get('companyNumber').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Vebsajt kompanije</ion-label>
+                <ion-input type="text" name="website" formControlName="website" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.website">
+                  <small
+                    *ngIf="addProducer.get('website').hasError(validation.type) &&
+                    (addProducer.get('website').dirty ||
+                    addProducer.get('website').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">URL adresa slike proizvođača</ion-label>
+                <ion-input type="text" name="imageUrl" formControlName="imageUrl" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.imageUrl">
+                  <small
+                    *ngIf="addProducer.get('imageUrl').hasError(validation.type) &&
+                    (addProducer.get('imageUrl').dirty ||
+                    addProducer.get('imageUrl').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!addProducer.valid">Sačuvaj</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

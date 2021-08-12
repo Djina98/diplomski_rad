@@ -23,7 +23,7 @@ export class AllProductsPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.productsService.getProducts().subscribe(performances => {
+    this.productsService.getProducts().subscribe(products => {
     });
   }
 

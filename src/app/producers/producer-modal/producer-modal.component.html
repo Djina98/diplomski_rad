@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="tertiary">Izmena proizvođača</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin">
+
+    <ion-card-content>
+      <form #editProducer="ngForm" (ngSubmit)="onEditProducer()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Naziv proizvođača</ion-label>
+                <ion-input type="text" name="name" [ngModel]='name' required>
+                </ion-input>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.name.invalid && editProducer.controls.name.touched">
+                  <small>Unesite naziv proizvođača</small>
+              </div>
+-->
+              <ion-item>
+                <ion-label position="floating" color="primary">Opis proizvođača</ion-label>
+                <ion-textarea rows="6" name="description" type="text" [ngModel]='description' required>
+                </ion-textarea>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.description.invalid && editProducer.controls.description.touched">
+                  <small>Unesite kratak opis</small>
+              </div>
+-->
+              <ion-item>
+                <ion-label position="floating" color="primary">Adresa kompanije</ion-label>
+                <ion-input name="address" type="text" [ngModel]='address' required>
+                </ion-input>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.address.invalid && editProducer.controls.address.touched">
+                  <small>Unesite adresu na kojoj se nalazi proizvođač</small>
+              </div>
+-->
+              <ion-item>
+                <ion-label position="floating" color="primary">Kontakt telefon</ion-label>
+                <ion-input type="text" name="phoneNumber" [ngModel]='phoneNumber' required>
+                </ion-input>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.phoneNumber.invalid && editProducer.controls.phoneNumber.touched">
+                  <small>Unesite kontakt telefon</small>
+              </div>
+-->
+              <ion-item>
+                <ion-label position="floating" color="primary">PIB broj kompanije</ion-label>
+                <ion-input type="text" name="taxIdentificationNumber" [ngModel]='taxIdentificationNumber' required>
+                </ion-input>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.taxIdentificationNumber.invalid && editProducer.controls.taxIdentificationNumber.touched">
+                  <small>Unesite PIB broj kompanije</small>
+              </div>
+-->
+              <ion-item>
+                <ion-label position="floating" color="primary">Matični broj kompanije</ion-label>
+                <ion-input type="text" name="companyNumber" [ngModel]='companyNumber' required>
+                </ion-input>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.companyNumber.invalid && editProducer.controls.companyNumber.touched">
+                  <small>Unesite matični broj kompanije</small>
+              </div>
+-->
+              <ion-item>
+                <ion-label position="floating" color="primary">Vebsajt kompanije</ion-label>
+                <ion-input type="text" name="website" [ngModel]='website' required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">URL adresa slike proizvođača</ion-label>
+                <ion-input type="text" name="imageUrl" [ngModel]='imageUrl' required>
+                </ion-input>
+              </ion-item>
+<!--
+              <div *ngIf="editProducer.controls.imageUrl.invalid && editProducer.controls.imageUrl.touched">
+                  <small>Unesite URL adresu slike proizvođača</small>
+              </div>
+-->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!editProducer.valid">Sačuvaj</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

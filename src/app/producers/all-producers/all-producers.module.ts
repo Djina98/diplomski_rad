@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AllProducersPageRoutingModule } from './all-producers-routing.module';
 
 import { AllProducersPage } from './all-producers.page';
+import { ProducerItemComponent } from '../producer-item/producer-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { AllProducersPage } from './all-producers.page';
     IonicModule,
     AllProducersPageRoutingModule
   ],
-  declarations: [AllProducersPage]
+  declarations: [AllProducersPage, ProducerItemComponent]
 })
 export class AllProducersPageModule {}

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="producers/tabs/all-producers" color="tertiary"></ion-back-button>
+    </ion-buttons>
+    <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
+    <ion-buttons slot="primary">
+      <ion-button (click)="onEditProducer()">
+        <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onDeleteProducer()">
+        <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+
+  <ion-grid *ngIf="!isLoading" no-padding>
+    <ion-row>
+      <ion-col class="ion-text-center" no-padding>
+        <img [src]="producer.imageUrl">
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h5>{{producer.name}}</h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="call"></ion-icon>
+        {{producer.phoneNumber}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="home"></ion-icon>
+        {{producer.address}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="search"></ion-icon>
+        PIB: {{producer.taxIdentificationNumber}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="search"></ion-icon>
+        Matični broj: {{producer.companyNumber}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="information-circle"></ion-icon>
+        Vebsajt:
+        <a [attr.href]="producer.website">
+          {{producer.website}}
+        </a>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        Opis: {{producer.description}}
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</ion-content>
+

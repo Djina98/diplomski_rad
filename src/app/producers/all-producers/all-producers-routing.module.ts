@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: AllProducersPage
+  },
+  {
+    path: ':producerId',
+    loadChildren: () => import('./producer-details/producer-details.module').then( m => m.ProducerDetailsPageModule)
   }
 ];
 

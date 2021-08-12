@@ -1,12 +1,19 @@
 <ion-header>
-  <ion-toolbar color="tertiary">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="tertiary"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Bee Organic</ion-title>
+    <ion-title color="tertiary">Bee Organic</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <app-producer-item
+      *ngFor="let producer of producers"
+      [producerItem]="producer"
+      [routerLink]="['/', 'producers', 'tabs', 'all-producers', producer.id]"
+    >
+    </app-producer-item>
+  </ion-list>
 </ion-content>

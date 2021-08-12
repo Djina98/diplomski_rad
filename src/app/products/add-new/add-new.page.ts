@@ -9,6 +9,7 @@ import { HoneyTypes, Packaging } from '../product.model';
 import { Producer } from "../../producers/producer.model";
 import { ProducersService } from 'src/app/producers/producers.service';
 import { ProductsService } from '../products.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-new',
@@ -19,9 +20,10 @@ export class AddNewPage implements OnInit {
 
   honeyTypes = HoneyTypes;
   packaging = Packaging;
-  producers: Producer[];
   typesKeys = [];
   packagingKeys = [];
+  producers: Producer[];
+  //producersSub: Subscription;
 
   validationUserMessage = {
     name: [
@@ -68,7 +70,6 @@ export class AddNewPage implements OnInit {
 
 
   ngOnInit() {
-    this.producers = this.producersService.getAllProducers();
     this.addProduct = this.formBuilder.group({
       name: new FormControl('', Validators.compose([
         Validators.required
@@ -102,7 +103,7 @@ export class AddNewPage implements OnInit {
   }
 
   onAddProduct() {
-    this.productsService.addProduct(this.addProduct.value.title, this.addProduct.value.type,
+    this.productsService.addProduct(this.addProduct.value.name, this.addProduct.value.type,
     this.addProduct.value.description, this.addProduct.value.amount,
     this.addProduct.value.price, this.addProduct.value.yearOfProduction,
     this.addProduct.value.packaging, this.addProduct.value.imageUrl).subscribe(products => {

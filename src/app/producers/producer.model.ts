@@ -1,3 +1,10 @@
+
+export class Producer implements Producer{
+  constructor(public id: string, public name: string, public description: string,
+              public address: string, public phoneNumber: string,
+              public taxIdentificationNumber: string, public companyNumber: string,
+              public website: string, public imageUrl: string) { }
+}
 export interface Producer {
   id: string;
   name: string;
@@ -7,7 +14,8 @@ export interface Producer {
   taxIdentificationNumber: string;
   companyNumber: string;
   website: string;
-  sertificate?: Sertificate;
+  imageUrl: string;
+  //sertificates?: Sertificate[];
 }
 
 export interface Sertificate{
