@@ -18,6 +18,7 @@ interface ProductData {
   description: string;
   yearOfProduction: number;
   packaging: Packaging;
+  producer: Producer;
   imageUrl: string;
 }
 
@@ -82,7 +83,7 @@ export class ProductsService {
   }
   */
   addProduct(name: string, type: HoneyTypes, description: string, amount: number, price: number,
-            yearOfProduction: number, packaging: Packaging, imageUrl: string) {
+            yearOfProduction: number, packaging: Packaging, producer: Producer, imageUrl: string) {
               let generatedId;
 
               return this.http.post<{name: string}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`,
@@ -93,6 +94,7 @@ export class ProductsService {
                 price,
                 yearOfProduction,
                 packaging,
+                producer,
                 imageUrl
               }).pipe(switchMap((resData) => {
 
@@ -109,6 +111,7 @@ export class ProductsService {
                   description,
                   yearOfProduction,
                   packaging,
+                  producer,
                   imageUrl
                 }));
               }));
@@ -131,6 +134,7 @@ export class ProductsService {
             price: productData[key].price,
             yearOfProduction: productData[key].yearOfProduction,
             packaging: productData[key].packaging,
+            producer: productData[key].producer,
             imageUrl: productData[key].imageUrl,
           });
         }
@@ -154,6 +158,7 @@ export class ProductsService {
           resData.price,
           resData.yearOfProduction,
           resData.packaging,
+          resData.producer,
           resData.imageUrl
         );
       }));
@@ -181,6 +186,7 @@ export class ProductsService {
     price: number,
     yearOfProduction: number,
     packaging: Packaging,
+    producer: Producer,
     imageUrl: string,
   )
     {
@@ -194,6 +200,7 @@ export class ProductsService {
           price,
           yearOfProduction,
           packaging,
+          producer,
           imageUrl
         }
       )
@@ -213,6 +220,7 @@ export class ProductsService {
           price,
           yearOfProduction,
           packaging,
+          producer,
           imageUrl
         );
         this._products.next(updatedProducts);

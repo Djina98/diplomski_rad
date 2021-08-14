@@ -75,7 +75,8 @@ export class ProductDetailsPage implements OnInit {
             name: this.product.name, type: this.product.type,
             description: this.product.description, amount: this.product.amount,
             price: this.product.price, yearOfProduction: this.product.yearOfProduction,
-            packaging: this.product.packaging, imageUrl: this.product.imageUrl},
+            packaging: this.product.packaging, producer: this.product.producer,
+            imageUrl: this.product.imageUrl},
       })
       .then((modal) => {
         modal.present();
@@ -97,6 +98,7 @@ export class ProductDetailsPage implements OnInit {
                   resultData.data.productData.price,
                   resultData.data.productData.yearOfProduction,
                   resultData.data.productData.packaging,
+                  resultData.data.productData.producer,
                   resultData.data.productData.imageUrl,
                 )
                 .subscribe((products) => {
@@ -107,6 +109,7 @@ export class ProductDetailsPage implements OnInit {
                   this.product.price = resultData.data.productData.price;
                   this.product.yearOfProduction = resultData.data.productData.yearOfProduction;
                   this.product.packaging = resultData.data.productData.packaging;
+                  this.product.producer = resultData.data.productData.producer;
                   this.product.imageUrl = resultData.data.productData.imageUrl;
                   loadingEl.dismiss();
                 });

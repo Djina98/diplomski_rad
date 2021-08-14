@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable no-trailing-spaces */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
@@ -16,14 +16,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './add-new.page.html',
   styleUrls: ['./add-new.page.scss'],
 })
-export class AddNewPage implements OnInit {
+export class AddNewPage implements OnInit, OnDestroy {
 
   honeyTypes = HoneyTypes;
   packaging = Packaging;
   typesKeys = [];
   packagingKeys = [];
   producers: Producer[];
-  //producersSub: Subscription;
+  producersSub: Subscription;
 
   validationUserMessage = {
     name: [
@@ -47,10 +47,9 @@ export class AddNewPage implements OnInit {
     packaging: [
       {type: 'required', message:'Izaberite tip ambalaže'},
     ],
-    /*
     producer: [
       {type: 'required', message:'Izaberite proizvođača'},
-    ],*/
+    ],
     imageUrl: [
       {type: 'required', message:'Unesite URL adresu slike proizvoda'},
     ]
@@ -70,6 +69,11 @@ export class AddNewPage implements OnInit {
 
 
   ngOnInit() {
+    this.producersSub = this.producersService.producers.subscribe(producers => {
+      console.log(producers);
+      this.producers = producers;
+    });
+
     this.addProduct = this.formBuilder.group({
       name: new FormControl('', Validators.compose([
         Validators.required
@@ -89,10 +93,9 @@ export class AddNewPage implements OnInit {
       packaging: new FormControl('', Validators.compose([
         Validators.required,
       ])),
-      /*
       producer: new FormControl('', Validators.compose([
         Validators.required,
-      ])),*/
+      ])),
       yearOfProduction: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -106,12 +109,23 @@ export class AddNewPage implements OnInit {
     this.productsService.addProduct(this.addProduct.value.name, this.addProduct.value.type,
     this.addProduct.value.description, this.addProduct.value.amount,
     this.addProduct.value.price, this.addProduct.value.yearOfProduction,
-    this.addProduct.value.packaging, this.addProduct.value.imageUrl).subscribe(products => {
+    this.addProduct.value.packaging, this.addProduct.value.producer, this.addProduct.value.imageUrl).subscribe(products => {
       console.log(products);
     });
 
     this.router.navigateByUrl('/products/tabs/all-products');
     this.addProduct.reset();
+  }
+
+  ionViewWillEnter() {
+    this.producersService.getProducers().subscribe(producers => {
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.producersSub) {
+      this.producersSub.unsubscribe();
+    }
   }
 
 }

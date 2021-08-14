@@ -1,7 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Producer } from 'src/app/producers/producer.model';
 import { ProducersService } from 'src/app/producers/producers.service';
@@ -13,7 +14,7 @@ import { ProductsService } from '../products.service';
   templateUrl: './product-modal.component.html',
   styleUrls: ['./product-modal.component.scss'],
 })
-export class ProductModalComponent implements OnInit {
+export class ProductModalComponent implements OnInit, OnDestroy {
   @Input() name: string;
   @Input() type: HoneyTypes;
   @Input() description: string;
@@ -21,6 +22,7 @@ export class ProductModalComponent implements OnInit {
   @Input() price: number;
   @Input() yearOfProduction: number;
   @Input() packaging: Packaging;
+  @Input() producer: Producer;
   @Input() imageUrl: string;
   @ViewChild('editProduct', { static: true }) editProduct: NgForm;
 
@@ -29,16 +31,22 @@ export class ProductModalComponent implements OnInit {
   producers: Producer[];
   typesKeys = [];
   packagingKeys = [];
+  producersSub: Subscription;
 
 
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController, private producersService: ProducersService) {
                 this.typesKeys=Object.keys(this.honeyTypes);
                 this.packagingKeys=Object.keys(this.packagingType);
               }
 
 
   ngOnInit() {
+    this.producersSub = this.producersService.producers.subscribe(producers => {
+      console.log(producers);
+      this.producers = producers;
+    });
+
   }
 
   onCancel() {
@@ -60,11 +68,23 @@ export class ProductModalComponent implements OnInit {
           price: this.editProduct.value.price,
           yearOfProduction: this.editProduct.value.yearOfProduction,
           packaging: this.editProduct.value.packaging,
+          producer: this.editProduct.value.producer,
           imageUrl: this.editProduct.value.imageUrl,
         }
       },
       'confirm'
     );
+  }
+
+  ionViewWillEnter() {
+    this.producersService.getProducers().subscribe(producers => {
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.producersSub) {
+      this.producersSub.unsubscribe();
+    }
   }
 
 }

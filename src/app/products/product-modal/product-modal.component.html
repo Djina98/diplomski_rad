@@ -90,26 +90,14 @@
                   <small>Izaberite tip ambalaže</small>
               </div>
 -->
-              <!--
+
               <ion-item>
                 <ion-label position="floating" color="primary">Proizvođač</ion-label>
-                <ion-select name="producer" type="text" formControlName="producer"
-                            cancelText="Nazad" okText="Izaberi"required>
+                <ion-select type="text" cancelText="Nazad" okText="Izaberi" [ngModel]='producer' name="producer" required>
                   <ion-select-option *ngFor="let producer of producers" [value]="producer">{{producer.name}}</ion-select-option>
                 </ion-select>
               </ion-item>
 
-              <div>
-                <ng-container *ngFor="let validation of validationUserMessage.producer">
-                  <small
-                    *ngIf="addProduct.get('producer').hasError(validation.type) &&
-                    (addProduct.get('producer').dirty ||
-                    addProduct.get('producer').touched)">
-                    {{validation.message}}
-                  </small>
-                </ng-container>
-              </div>
-            -->
               <ion-item>
                 <ion-label position="floating" color="primary">URL adresa slike proizvoda</ion-label>
                 <ion-input type="text" [ngModel]='imageUrl' name="imageUrl" required>

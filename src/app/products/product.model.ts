@@ -6,7 +6,7 @@ export class Product implements Product{
   constructor(public id: string, public name: string, public type: HoneyTypes,
               public description: string, public amount: number,
               public price: number, public yearOfProduction: number,
-              public packaging: Packaging, public imageUrl: string) { }
+              public packaging: Packaging, public producer: Producer, public imageUrl: string) { }
 }
 
 export interface Product {
@@ -18,7 +18,7 @@ export interface Product {
     price: number;
     yearOfProduction: number;
     packaging: Packaging;
-    //producer: Producer;
+    producer: Producer;
     imageUrl: string;
 }
 
