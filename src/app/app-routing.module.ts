@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: 'products',
     loadChildren: () => import('./products/products.module').then( m => m.ProductsPageModule),
-    //canLoad: [AuthGuard]
+    canLoad: [AuthGuard]
   },
   {
     path: 'welcome',
@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'producers',
     loadChildren: () => import('./producers/producers.module').then( m => m.ProducersPageModule),
-    //canLoad: [AuthGuard]
+    canLoad: [AuthGuard]
   }
 ];
 @NgModule({

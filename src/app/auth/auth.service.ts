@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { RegisterUser } from './registerUser.model';
 
 interface AuthResponseData {
   kind: string;
@@ -19,7 +20,7 @@ interface AuthResponseData {
 
 interface UserData {
   fullname: string;
-  phoneNumber: number;
+  phoneNumber: string;
   address: string;
   email: string;
   password: string;
@@ -31,63 +32,165 @@ interface UserData {
 })
 export class AuthService {
 
+  public currentUser = null;
   private userRole = 'user';
   private adminRole = 'admin';
   private _isUserAuthenticated = false;
-  private user = new BehaviorSubject<User>(null);
+  private _user = new BehaviorSubject<User>(null);
+  private _users = new BehaviorSubject<RegisterUser[]>([]);
 
   constructor(private http: HttpClient) { }
 
-  get isUserAuthenticated(): boolean{
-    return this._isUserAuthenticated;
+  get users() {
+    return this._users.asObservable();
+  }
+
+  get isUserAuthenticated() {
+
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return !!user.token;
+        } else {
+          return false;
+        }
+      })
+    );
+  }
+
+  get userId() {
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return user.id;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
+  get token() {
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return user.token;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
   register(user: UserData){
     this._isUserAuthenticated = true;
     return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,
-              {email: user.email, password: user.password, returnSecureToken: true})
-            .pipe(
-            tap((userData) => {
-              const expirationTime = new Date(new Date().getTime() + +userData.expiresIn * 1000);
-              const newUser = new User(userData.localId, userData.email, userData.idToken, expirationTime);
-              this.user.next(newUser);
-
-            })
-        );
-
+      {email: user.email, password: user.password, returnSecureToken: true})
+      .pipe(
+        tap((userData) => {
+          const expirationTime = new Date(new Date().getTime() + +userData.expiresIn * 1000);
+          const newUser = new User(userData.localId, userData.email, userData.idToken, expirationTime);
+          this.currentUser = newUser;
+          console.log('current user: ' + this.currentUser.role);
+          this._user.next(newUser);
+          console.log('user' + this._user);
+        })
+      );
   }
 
   login(user: UserData){
     this._isUserAuthenticated = true;
-    return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
-                                            ${environment.firebaseAPIKey}`,
+    return this.http.post<AuthResponseData>(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`,
               {email: user.email, password: user.password, returnSecureToken: true})
             .pipe(
             tap((userData) => {
               const expirationTime = new Date(new Date().getTime() + +userData.expiresIn * 1000);
               const newUser = new User(userData.localId, userData.email, userData.idToken, expirationTime);
-              this.user.next(newUser);
+              this.currentUser = newUser;
+              console.log('current user: ' + this.currentUser.email);
+              this._user.next(newUser);
             })
         );
   }
 
   logout() {
-    this.user.next(null);
+    this._user.next(null);
+  }
+
+  addNewUser(user: UserData){
+    if(user.email === 'admin@admin.com'){
+      this.addAdmin(user).subscribe(admin =>{
+        //console.log(admin);
+      });
+    }else{
+      this.addUser(user).subscribe(res =>{
+        //console.log(res);
+      });
+    }
+  }
+
+  addAdmin(user: UserData){
+
+    let generatedId;
+    let admin: RegisterUser;
+
+    return this.token.pipe(
+      take(1),
+      switchMap((token) => {
+        admin = new RegisterUser(
+          null,
+          user.fullname,
+          user.phoneNumber,
+          user.address,
+          user.email,
+          this.adminRole
+        );
+          return this.http.post<{name: string}>(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`, admin);
+          }),
+          take(1),
+          switchMap((resData) => {
+            generatedId = resData.name;
+            return this.users;
+          }),
+          take(1),
+          tap((users) => {
+            admin.id = generatedId;
+            this._users.next(users.concat(admin));
+          })
+      );
   }
 
   addUser(user: UserData){
-    if(user.email === 'admin@admin.com'){
-      return this.http.post<{name: string}>(
-        'https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
-          fullname: user.fullname, phoneNumber: user.phoneNumber, address: user.address,
-          email: user.email, role: this.adminRole
-      });
-    }else{
-      return this.http.post<{name: string}>(
-        'https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
-          fullname: user.fullname, phoneNumber: user.phoneNumber, address: user.address,
-          email: user.email, role: this.userRole
-      });
-    }
+
+    let generatedId;
+    let newUser: RegisterUser;
+
+    return this.token.pipe(
+      take(1),
+      switchMap((token) => {
+        newUser = new RegisterUser(
+          null,
+          user.fullname,
+          user.phoneNumber,
+          user.address,
+          user.email,
+          this.userRole
+        );
+          return this.http.post<{name: string}>(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`, newUser);
+          }),
+          take(1),
+          switchMap((resData) => {
+            generatedId = resData.name;
+            return this.users;
+          }),
+          take(1),
+          tap((users) => {
+            newUser.id = generatedId;
+            this._users.next(users.concat(newUser));
+          })
+      );
   }
 }

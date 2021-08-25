@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 import { Producer } from '../producers/producer.model';
 import { ProducersService } from '../producers/producers.service';
 import { HoneyTypes, Packaging, Product } from './product.model';
@@ -65,116 +66,115 @@ export class ProductsService {
     }
   ];*/
 
-  constructor(private producersService: ProducersService, private http: HttpClient) { }
+  constructor(private producersService: ProducersService, private http: HttpClient,
+              private authService: AuthService) { }
 
   get products() {
     return this._products.asObservable();
   }
 
-  /*
-  getAllProducts() {
-    return [...this.products];
-  }
-
-  getProduct(productId: string){
-    return {
-      ...this.products.find(product => product.id === productId)
-    };
-  }
-  */
   addProduct(name: string, type: HoneyTypes, description: string, amount: number, price: number,
             yearOfProduction: number, packaging: Packaging, producer: Producer, imageUrl: string) {
-              let generatedId;
+    let generatedId;
+    let newProduct: Product;
 
-              return this.http.post<{name: string}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`,
-              { name,
-                type,
-                description,
-                amount,
-                price,
-                yearOfProduction,
-                packaging,
-                producer,
-                imageUrl
-              }).pipe(switchMap((resData) => {
-
-                generatedId = resData.name;
-                return this.products;
-
-              }), take(1), tap(products => {
-                this._products.next(products.concat({
-                  id: generatedId,
-                  name,
-                  type,
-                  amount,
-                  price,
-                  description,
-                  yearOfProduction,
-                  packaging,
-                  producer,
-                  imageUrl
-                }));
-              }));
-  }
-
-  getProducts() {
-    return this.http.
-    get<{[key: string]: ProductData}>(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json`)
-    .pipe(map((productData) => {
-      const products: Product[] = [];
-
-      for(const key in productData){
-        if(productData.hasOwnProperty(key)){
-          products.push({
-            id: key,
-            name: productData[key].name,
-            type: productData[key].type,
-            description: productData[key].description,
-            amount: productData[key].amount,
-            price: productData[key].price,
-            yearOfProduction: productData[key].yearOfProduction,
-            packaging: productData[key].packaging,
-            producer: productData[key].producer,
-            imageUrl: productData[key].imageUrl,
-          });
-        }
-      }
-      this._products.next(products);
-      return products;
-    }));
-  }
-
-  getProduct(id: string) {
-    return this.http
-    .get<ProductData>(
-      `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`)
-      .pipe(map((resData: ProductData) => {
-        return new Product(
-          id,
-          resData.name,
-          resData.type,
-          resData.description,
-          resData.amount,
-          resData.price,
-          resData.yearOfProduction,
-          resData.packaging,
-          resData.producer,
-          resData.imageUrl
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        newProduct = new Product(
+          null,
+          name,
+          type,
+          description,
+          amount,
+          price,
+          yearOfProduction,
+          packaging,
+          producer,
+          imageUrl
         );
-      }));
-  }
-
-  deleteProduct(id: string) {
-        return this.http.delete(
-          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`)
-        .pipe(switchMap(() => {
+        return this.http.post<{name: string}>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=${token}`, newProduct);
+        }),
+        take(1),
+        switchMap((resData) => {
+          generatedId = resData.name;
           return this.products;
         }),
         take(1),
         tap((products) => {
-          this._products.next(products.filter((p) => p.id !== id));
+          newProduct.id = generatedId;
+          this._products.next(products.concat(newProduct));
         })
       );
+  }
+
+  getProducts() {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.
+          get<{[key: string]: ProductData}>(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=${token}`
+            );
+          }),
+          map((productData: any) => {
+            const products: Product[] = [];
+            for(const key in productData){
+              if(productData.hasOwnProperty(key)){
+                products.push(new Product(key, productData[key].name, productData[key].type, productData[key].description, productData[key].amount, productData[key].price, productData[key].yearOfProduction, productData[key].packaging, productData[key].producer, productData[key].imageUrl)
+                );
+              }
+            }
+          return products;
+        }),
+        tap(products => {
+          this._products.next(products);
+        }));
+  }
+
+  getProduct(id: string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<ProductData>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json?auth=${token}`
+          );
+        }),
+        map((resData: ProductData) => {
+          return new Product(
+            id,
+            resData.name,
+            resData.type,
+            resData.description,
+            resData.amount,
+            resData.price,
+            resData.yearOfProduction,
+            resData.packaging,
+            resData.producer,
+            resData.imageUrl
+          );
+        }
+      )
+    );
+  }
+
+  deleteProduct(id: string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.delete(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json?auth=${token}`
+        );
+      }),
+      switchMap(() => {
+        return this.products;
+      }),
+      take(1),
+      tap((products) => {
+        this._products.next(products.filter((p) => p.id !== id));
+      })
+    );
   }
 
   editProduct(
@@ -190,22 +190,25 @@ export class ProductsService {
     imageUrl: string,
   )
     {
-      return this.http
-      .put(`https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json`,
-        {
-          name,
-          type,
-          description,
-          amount,
-          price,
-          yearOfProduction,
-          packaging,
-          producer,
-          imageUrl
-        }
-      )
-      .pipe(switchMap(() => {
-        return this.products;
+      return this.authService.token.pipe(
+        take(1),
+        switchMap((token) => {
+          return this.http.put(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/products/${id}.json?auth=${token}`,
+          {
+            name,
+            type,
+            description,
+            amount,
+            price,
+            yearOfProduction,
+            packaging,
+            producer,
+            imageUrl
+          }
+        );
+      }), switchMap(() => {
+          return this.products;
       }),
       take(1),
       tap((products) => {
