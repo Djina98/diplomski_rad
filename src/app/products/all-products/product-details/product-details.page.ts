@@ -13,7 +13,8 @@ import { ProductsService } from '../../products.service';
 })
 export class ProductDetailsPage implements OnInit {
 
-  product: Product;
+
+  public product: Product;
   isLoading = false;
 
   constructor(

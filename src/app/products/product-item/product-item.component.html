@@ -1,10 +1,21 @@
-<ion-item>
-  <ion-label>{{productItem.name}}</ion-label>
-  <ion-avatar slot="end">
-    <ion-img [src]="productItem.imageUrl"></ion-img>
-  </ion-avatar>
-</ion-item>
+<ion-item-sliding>
+  <ion-item>
+    <ion-label>{{productItem.name}}</ion-label>
+    <ion-avatar slot="end">
+      <ion-img [src]="productItem.imageUrl"></ion-img>
+    </ion-avatar>
+  </ion-item>
 
+  <ion-item-options side="end" *ngIf="authService.currentUser?.email==='admin@admin.com'">
+    <ion-item-option color="tertiary" expandable>
+      <ion-buttons>
+        <ion-button (click)="onDeleteProduct(productItem)">
+          <ion-icon name="trash" slot="icon-only" color="primary"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
 <!--
   [routerLink]="['', 'products', 'tabs', 'all-products', productItem.id]"
 -->

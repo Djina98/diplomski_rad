@@ -10,6 +10,11 @@ ion-header{
 ion-card{
   --ion-background-color: transparent;
   box-shadow: none !important;
+  border-top: 3px solid #432818;
+}
+
+.formArrayCard{
+  --ion-background-color: #ffe29c;
 }
 
 ion-card-title{

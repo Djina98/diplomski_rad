@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -8,8 +9,19 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private authService: AuthService,
-              private router: Router) {}
+  constructor(public authService: AuthService,
+              private router: Router,
+              private menu: MenuController) {}
+
+  openMenuForUser() {
+    this.menu.enable(true, 'adminMenu');
+    this.menu.open('adminMenu');
+  }
+
+  openMenuForAdmin() {
+    this.menu.enable(true, 'userMenu');
+    this.menu.open('userMenu');
+  }
 
   onLogout() {
     this.authService.logout();

@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-menu side="start" contentId="main">
+  <ion-menu side="start" contentId="main" menuId="adminMenu" *ngIf="authService.currentUser?.email==='admin@admin.com'">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title color="tertiary">Bee organic</ion-title>

@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { RegisterUser } from 'src/app/auth/registerUser.model';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 
@@ -11,13 +13,13 @@ import { ProductsService } from '../products.service';
 export class AllProductsPage implements OnInit, OnDestroy {
 
   products: Product[];
+  public role: string;
   private productsSub: Subscription;
 
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService, public authService: AuthService) { }
 
   ngOnInit() {
     this.productsSub = this.productsService.products.subscribe(products => {
-      console.log(products);
       this.products = products;
     });
   }

@@ -52,7 +52,17 @@ export class AddNewPage implements OnInit, OnDestroy {
     ],
     imageUrl: [
       {type: 'required', message:'Unesite URL adresu slike proizvoda'},
-    ]
+    ],
+    /*
+    latitude: [
+      {type: 'required', message:'Unesite geografsku širinu lokacije'},
+    ],
+    longitude: [
+      {type: 'required', message:'Unesite geografsku dužinu lokacije'},
+    ],
+    dateFrom: [
+      {type: 'required', message:'Unesite datum od'},
+    ],*/
   };
 
   addProduct: FormGroup;
@@ -101,6 +111,27 @@ export class AddNewPage implements OnInit, OnDestroy {
       ])),
       imageUrl: new FormControl('', Validators.compose([
         Validators.required,
+      ])),
+      /*
+      locations: this.formBuilder.array([
+        this.addLocationsFormGroup()
+      ])*/
+    });
+  }
+
+  addLocationsFormGroup(){
+    return this.formBuilder.group({
+      latitude: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      longitude: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      dateFrom: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      dateTo:new FormControl('', Validators.compose([
+
       ])),
     });
   }

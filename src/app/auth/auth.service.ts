@@ -1,3 +1,5 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-underscore-dangle */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -38,11 +40,25 @@ export class AuthService {
   private _isUserAuthenticated = false;
   private _user = new BehaviorSubject<User>(null);
   private _users = new BehaviorSubject<RegisterUser[]>([]);
+  private _role = new BehaviorSubject<RegisterUser>(null);
 
   constructor(private http: HttpClient) { }
 
   get users() {
     return this._users.asObservable();
+  }
+
+  get role() {
+    return this._role.asObservable().pipe(
+      map((userRole) => {
+        if (userRole) {
+          return userRole.role;
+        } else {
+          return null;
+        }
+      })
+    );
+
   }
 
   get isUserAuthenticated() {
@@ -93,7 +109,6 @@ export class AuthService {
           this.currentUser = newUser;
           console.log('current user: ' + this.currentUser.role);
           this._user.next(newUser);
-          console.log('user' + this._user);
         })
       );
   }
@@ -192,5 +207,40 @@ export class AuthService {
             this._users.next(users.concat(newUser));
           })
       );
+  }
+
+  getUserRole(email: string){
+
+    let userRole: RegisterUser;
+
+    return this.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<UserData>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`
+          );
+        }),
+        map((resData: UserData) => {
+
+          for(const key in resData){
+            if(resData.hasOwnProperty(key) && resData[key].email === email){
+              userRole = new RegisterUser(
+                null,
+                userRole.fullname,
+                userRole.phoneNumber,
+                userRole.address,
+                userRole.email,
+                userRole.role
+              );
+              return userRole;
+            }
+          }
+        }
+      ),
+      take(1),
+          tap((role) => {
+            this._role.next(role);
+          })
+    );
   }
 }
