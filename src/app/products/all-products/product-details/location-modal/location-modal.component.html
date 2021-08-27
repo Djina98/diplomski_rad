@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="tertiary">{{title}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin">
+
+    <ion-card-content>
+      <form #location="ngForm" (ngSubmit)="onAddLocation()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Geografska širina</ion-label>
+                <ion-input [pattern]="'^-?[0-9]{1,3}(?:\.[0-9]{1,10})?$'" type="text" [ngModel]='latitude' name="latitude" required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Geografska dužina</ion-label>
+                <ion-input [pattern]="'^-?[0-9]{1,3}(?:\.[0-9]{1,10})?$'" type="text" [ngModel]='longitude' name="longitude" required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Datum od</ion-label>
+                <ion-datetime type="text" displayFormat="MMM, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='dateFrom' name="dateFrom" required></ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Datum do</ion-label>
+                <ion-datetime type="text" displayFormat="MMM, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='dateTo' name="dateTo"></ion-datetime>
+              </ion-item>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!location.valid">Sačuvaj</ion-button>
+        </div>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

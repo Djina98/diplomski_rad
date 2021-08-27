@@ -1,21 +1,31 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { ProductModalComponent } from '../../product-modal/product-modal.component';
 import { Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
+import { LocationModalComponent } from './location-modal/location-modal.component';
+import { Location } from './location.model';
+import { LocationsService } from './locations.service';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.page.html',
   styleUrls: ['./product-details.page.scss'],
 })
-export class ProductDetailsPage implements OnInit {
+export class ProductDetailsPage implements OnInit, OnDestroy {
 
 
-  public product: Product;
+  product: Product;
   isLoading = false;
+  locations: Location[];
+  private locationsSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +34,9 @@ export class ProductDetailsPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private locationsService: LocationsService,
+    private toastCtrl: ToastController
     ) { }
 
   ngOnInit() {
@@ -44,6 +56,27 @@ export class ProductDetailsPage implements OnInit {
         });
     });
     console.log(this.product);
+
+    this.locationsSub = this.locationsService.locations.subscribe(locations => {
+      this.locations = locations;
+    });
+
+    if(this.locations.length === 0){
+      this.toastMessage(`Za ovaj proizvod još uvek nisu unete lokacije košnica.`);
+    }
+  }
+
+  ionViewWillEnter() {
+    this.route.paramMap.subscribe(paramMap => {
+      this.locationsService.getLocations(paramMap.get('productId')).subscribe(locations => {
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.locationsSub) {
+      this.locationsSub.unsubscribe();
+    }
   }
 
   onDeleteProduct(){
@@ -73,6 +106,7 @@ export class ProductDetailsPage implements OnInit {
       .create({
         component: ProductModalComponent,
         componentProps: {
+            title: 'Izmena proizvoda',
             name: this.product.name, type: this.product.type,
             description: this.product.description, amount: this.product.amount,
             price: this.product.price, yearOfProduction: this.product.yearOfProduction,
@@ -117,5 +151,33 @@ export class ProductDetailsPage implements OnInit {
             });
         }
       });
+  }
+
+  onAddLocation(){
+    this.modalCtrl
+      .create({
+        component: LocationModalComponent,
+        componentProps: {title: 'Lokacija košnica', product: this.product}
+      })
+      .then((modal) => {
+        modal.present();
+        return modal.onDidDismiss();
+      }).then((resultData) => {
+      if (resultData.role === 'confirm') {
+        console.log(resultData);
+
+        this.locationsService.addLocation(resultData.data.locationData.productId, resultData.data.locationData.latitude, resultData.data.locationData.longitude, resultData.data.locationData.dateFrom, resultData.data.locationData.dateTo).subscribe((locations) => {
+
+        });
+      }
+    });
+  }
+
+  async toastMessage(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 5000,
+    });
+    toast.present();
   }
 }

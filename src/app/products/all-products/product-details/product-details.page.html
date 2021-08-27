@@ -61,6 +61,31 @@
       </ion-col>
     </ion-row>
 
+    <ion-card class="ion-no-margin">
+      <ion-card-header>
+        <ion-card-title>
+          Lokacije košnica
+        </ion-card-title>
+      </ion-card-header>
+
+      <div class="location-btn-wrap">
+        <ion-button class="location-btn" (click)="onAddLocation()">Dodaj lokacije košnica</ion-button>
+      </div>
+
+      <ion-card-content>
+        <ion-list *ngIf="locations.length>0">
+          <ion-item *ngFor="let location of locations">
+            <ion-label>{{location.latitude}} N, {{location.longitude}} E</ion-label>
+            <ion-icon name="chevron-forward"></ion-icon>
+          </ion-item>
+        </ion-list>
+
+        <ion-item *ngIf="locations.length===0">
+          <ion-label>Nema dostupnih lokacija</ion-label>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
 
   </ion-grid>
 </ion-content>

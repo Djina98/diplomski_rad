@@ -15,6 +15,7 @@ import { ProductsService } from '../products.service';
   styleUrls: ['./product-modal.component.scss'],
 })
 export class ProductModalComponent implements OnInit, OnDestroy {
+  @Input() title: string;
   @Input() name: string;
   @Input() type: HoneyTypes;
   @Input() description: string;
