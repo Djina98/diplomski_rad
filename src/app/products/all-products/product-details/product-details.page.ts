@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable guard-for-in */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/dot-notation */
@@ -25,6 +26,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   product: Product;
   isLoading = false;
   locations: Location[];
+  notAvailable: boolean = false;
   private locationsSub: Subscription;
 
   constructor(
@@ -55,22 +57,33 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
           this.isLoading = false;
         });
     });
-    console.log(this.product);
 
     this.locationsSub = this.locationsService.locations.subscribe(locations => {
       this.locations = locations;
+/*
+      if(locations.length===0){
+        console.log(locations);
+        console.log(locations.length);
+        this.toastMessage(`Za ovaj proizvod još uvek nisu unete lokacije košnica.`);
+      }
+      */
     });
-
-    if(this.locations.length === 0){
-      this.toastMessage(`Za ovaj proizvod još uvek nisu unete lokacije košnica.`);
-    }
   }
 
   ionViewWillEnter() {
     this.route.paramMap.subscribe(paramMap => {
       this.locationsService.getLocations(paramMap.get('productId')).subscribe(locations => {
+        console.log(locations);
       });
     });
+  }
+
+  ionViewDidEnter(){
+    if(this.locations.length===0){
+      console.log(this.locations);
+      console.log(this.locations.length);
+      this.toastMessage(`Za ovaj proizvod još uvek nisu unete lokacije košnica.`);
+    }
   }
 
   ngOnDestroy() {

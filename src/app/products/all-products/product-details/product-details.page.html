@@ -74,7 +74,7 @@
 
       <ion-card-content>
         <ion-list *ngIf="locations.length>0">
-          <ion-item *ngFor="let location of locations">
+          <ion-item *ngFor="let location of locations" [routerLink]="['/', 'products', 'tabs', 'all-products', product.id, location.id]">
             <ion-label>{{location.latitude}} N, {{location.longitude}} E</ion-label>
             <ion-icon name="chevron-forward"></ion-icon>
           </ion-item>
