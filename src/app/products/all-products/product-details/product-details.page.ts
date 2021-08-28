@@ -26,7 +26,6 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   product: Product;
   isLoading = false;
   locations: Location[];
-  notAvailable: boolean = false;
   private locationsSub: Subscription;
 
   constructor(
@@ -60,13 +59,6 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
 
     this.locationsSub = this.locationsService.locations.subscribe(locations => {
       this.locations = locations;
-/*
-      if(locations.length===0){
-        console.log(locations);
-        console.log(locations.length);
-        this.toastMessage(`Za ovaj proizvod još uvek nisu unete lokacije košnica.`);
-      }
-      */
     });
   }
 
@@ -82,7 +74,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     if(this.locations.length===0){
       console.log(this.locations);
       console.log(this.locations.length);
-      this.toastMessage(`Za ovaj proizvod još uvek nisu unete lokacije košnica.`);
+      this.toastMessage(`Za ovaj proizvod nisu unete lokacije košnica.`);
     }
   }
 
@@ -170,7 +162,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     this.modalCtrl
       .create({
         component: LocationModalComponent,
-        componentProps: {title: 'Lokacija košnica', product: this.product}
+        componentProps: {title: 'Lokacija košnica', productId: this.product.id}
       })
       .then((modal) => {
         modal.present();

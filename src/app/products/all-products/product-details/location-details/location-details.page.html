@@ -1,9 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>location-details</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
+    </ion-buttons>
+    <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
+    <ion-buttons slot="primary">
+      <ion-button (click)="onEditLocation()">
+        <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onDeleteLocation()">
+        <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+
+  <ion-grid *ngIf="!isLoading" no-padding>
+    <ion-row>
+      <ion-col>
+        <h5>{{location.latitude}} N, {{location.longitude}} E</h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="calendar-number"></ion-icon>
+        <ion-label text-center>{{location.dateFrom | date: 'MM.yyyy'}} - {{location.dateTo | date: 'MM.yyyy'}}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

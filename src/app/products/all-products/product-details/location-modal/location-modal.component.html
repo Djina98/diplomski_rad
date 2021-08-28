@@ -18,6 +18,11 @@
           <ion-row>
             <ion-col size-sm="6" offset-sm="3">
 
+              <ion-item class="no-border">
+                <ion-input hidden type="text" [ngModel]='productId' name="productId" required>
+                </ion-input>
+              </ion-item>
+
               <ion-item>
                 <ion-label position="floating" color="primary">Geografska širina</ion-label>
                 <ion-input [pattern]="'^-?[0-9]{1,3}(?:\.[0-9]{1,10})?$'" type="text" [ngModel]='latitude' name="latitude" required>

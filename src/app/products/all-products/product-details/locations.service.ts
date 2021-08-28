@@ -83,4 +83,86 @@ export class LocationsService {
           this._locations.next(locations);
         }));
   }
+
+  getLocation(id: string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<LocationData>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/locations/${id}.json?auth=${token}`
+          );
+        }),
+        map((resData: LocationData) => {
+          return new Location(
+            id,
+            resData.productId,
+            resData.latitude,
+            resData.longitude,
+            resData.dateFrom,
+            resData.dateTo
+          );
+        }
+      )
+    );
+  }
+
+  deleteLocation(id: string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.delete(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/locations/${id}.json?auth=${token}`
+        );
+      }),
+      switchMap(() => {
+        return this.locations;
+      }),
+      take(1),
+      tap((locations) => {
+        this._locations.next(locations.filter((p) => p.id !== id));
+      })
+    );
+  }
+
+  editLocation(
+    id: string,
+    productId: string,
+    latitude: string,
+    longitude: string,
+    dateFrom: Date,
+    dateTo: Date,
+  )
+    {
+      return this.authService.token.pipe(
+        take(1),
+        switchMap((token) => {
+          return this.http.put(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/locations/${id}.json?auth=${token}`,
+          {
+            productId,
+            latitude,
+            longitude,
+            dateFrom,
+            dateTo,
+          }
+        );
+      }), switchMap(() => {
+          return this.locations;
+      }),
+      take(1),
+      tap((locations) => {
+        const updatedLocationIndex = locations.findIndex((p) => p.id === id);
+        const updatedLocations = [...locations];
+        updatedLocations[updatedLocationIndex] = new Location(
+          id,
+          productId,
+          latitude,
+          longitude,
+          dateFrom,
+          dateTo,
+        );
+        this._locations.next(updatedLocations);
+      })
+    );
+  }
 }

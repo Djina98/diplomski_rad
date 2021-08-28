@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { LocationDetailsPageRoutingModule } from './location-details-routing.module';
 
 import { LocationDetailsPage } from './location-details.page';
+import { LocationModalComponent } from '../location-modal/location-modal.component';
 
 @NgModule({
   imports: [
