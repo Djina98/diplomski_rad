@@ -40,7 +40,7 @@ export class AuthService {
   private _isUserAuthenticated = false;
   private _user = new BehaviorSubject<User>(null);
   private _users = new BehaviorSubject<RegisterUser[]>([]);
-  private _role = new BehaviorSubject<RegisterUser>(null);
+  //private _role = new BehaviorSubject<RegisterUser>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -48,6 +48,7 @@ export class AuthService {
     return this._users.asObservable();
   }
 
+  /*
   get role() {
     return this._role.asObservable().pipe(
       map((userRole) => {
@@ -60,7 +61,7 @@ export class AuthService {
     );
 
   }
-
+*/
   get isUserAuthenticated() {
 
     return this._user.asObservable().pipe(
@@ -209,6 +210,7 @@ export class AuthService {
       );
   }
 
+  /*
   getUserRole(email: string){
 
     let userRole: RegisterUser;
@@ -243,4 +245,5 @@ export class AuthService {
           })
     );
   }
+  */
 }

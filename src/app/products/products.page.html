@@ -1,5 +1,6 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" *ngIf="authService.currentUser.email==='admin@admin.com'">
+
     <ion-tab-button tab="all-products">
       <ion-icon name="cart" color="tertiary"></ion-icon>
       <ion-label color="tertiary">Proizvodi</ion-label>

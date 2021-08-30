@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Producer } from 'src/app/producers/producer.model';
 import { ProducersService } from 'src/app/producers/producers.service';
 import { SertificateModalComponent } from '../sertificate-modal/sertificate-modal.component';
@@ -30,7 +31,8 @@ export class SertificateDetailsPage implements OnInit {
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private producersService: ProducersService) {
+    private producersService: ProducersService,
+    public authService: AuthService) {
       this.keys=Object.keys(this.sertificateTypes);
   }
 

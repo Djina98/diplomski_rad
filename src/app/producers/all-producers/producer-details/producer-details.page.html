@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="producers/tabs/all-producers" color="tertiary"></ion-back-button>
     </ion-buttons>
     <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
-    <ion-buttons slot="primary">
+    <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@admin.com'">
       <ion-button (click)="onEditProducer()">
         <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
       </ion-button>
@@ -86,7 +86,7 @@
       </ion-card-header>
 
       <div class="sertificate-btn-wrap">
-        <ion-button class="sertificate-btn" (click)="onAddSertificate()">Dodaj sertifikat</ion-button>
+        <ion-button class="sertificate-btn" (click)="onAddSertificate()" *ngIf="authService.currentUser.email==='admin@admin.com'">Dodaj sertifikat</ion-button>
       </div>
 
       <ion-card-content>

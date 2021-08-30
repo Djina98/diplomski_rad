@@ -1,11 +1,12 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" *ngIf="authService.currentUser.email==='admin@admin.com'">
+
     <ion-tab-button tab="all-producers">
       <ion-icon name="people" color="tertiary"></ion-icon>
       <ion-label color="tertiary">Proizvođači</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="add-new">
+    <ion-tab-button tab="add-new" *ngIf="authService.currentUser.email==='admin@admin.com'">
       <ion-icon name="add-circle" color="tertiary"></ion-icon>
       <ion-label color="tertiary">Dodaj novog</ion-label>
     </ion-tab-button>

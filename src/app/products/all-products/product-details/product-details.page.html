@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
     </ion-buttons>
     <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
-    <ion-buttons slot="primary">
+    <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@admin.com'">
       <ion-button (click)="onEditProduct()">
         <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
       </ion-button>
@@ -69,7 +69,7 @@
       </ion-card-header>
 
       <div class="location-btn-wrap">
-        <ion-button class="location-btn" (click)="onAddLocation()">Dodaj lokacije košnica</ion-button>
+        <ion-button class="location-btn" (click)="onAddLocation()" *ngIf="authService.currentUser.email==='admin@admin.com'">Dodaj lokacije košnica</ion-button>
       </div>
 
       <ion-card-content>

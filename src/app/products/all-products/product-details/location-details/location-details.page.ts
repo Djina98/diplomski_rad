@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Product } from 'src/app/products/product.model';
 import { ProductsService } from 'src/app/products/products.service';
 import { LocationModalComponent } from '../location-modal/location-modal.component';
@@ -29,7 +30,8 @@ export class LocationDetailsPage implements OnInit {
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {

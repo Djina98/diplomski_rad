@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { Product } from './product.model';
 import { ProductsService } from './products.service';
 
@@ -9,7 +10,7 @@ import { ProductsService } from './products.service';
 })
 export class ProductsPage implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() { }
 

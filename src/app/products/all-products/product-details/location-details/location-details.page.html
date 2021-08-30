@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
     </ion-buttons>
     <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
-    <ion-buttons slot="primary">
+    <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@admin.com'">
       <ion-button (click)="onEditLocation()">
         <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
       </ion-button>

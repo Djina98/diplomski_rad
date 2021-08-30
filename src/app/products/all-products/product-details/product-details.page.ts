@@ -39,7 +39,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     private navCtrl: NavController,
     private locationsService: LocationsService,
     private toastCtrl: ToastController,
-    private authService: AuthService
+    public authService: AuthService
     ) { }
 
   ngOnInit() {

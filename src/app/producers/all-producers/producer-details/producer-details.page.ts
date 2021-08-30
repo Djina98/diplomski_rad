@@ -36,7 +36,7 @@ export class ProducerDetailsPage implements OnInit {
     private navCtrl: NavController,
     private sertificatesService: SertificatesService,
     private toastCtrl: ToastController,
-    private authService: AuthService) {
+    public authService: AuthService) {
       this.keys = Object.keys(this.sertificateTypes);
     }
 
