@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProducerDetailsPage
+  },
+  {
+    path: ':sertificateId',
+    loadChildren: () => import('./sertificate-details/sertificate-details.module').then( m => m.SertificateDetailsPageModule)
   }
 ];
 

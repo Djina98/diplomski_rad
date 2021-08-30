@@ -8,6 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ProductModalComponent } from '../../product-modal/product-modal.component';
 import { Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
@@ -37,7 +38,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private navCtrl: NavController,
     private locationsService: LocationsService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private authService: AuthService
     ) { }
 
   ngOnInit() {
@@ -71,9 +73,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter(){
-    if(this.locations.length===0){
-      console.log(this.locations);
-      console.log(this.locations.length);
+    if(this.locations.length===0 && this.authService.currentUser.email==='admin@admin.com'){
       this.toastMessage(`Za ovaj proizvod nisu unete lokacije košnica.`);
     }
   }

@@ -1,10 +1,16 @@
+/* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ProducerModalComponent } from '../../producer-modal/producer-modal.component';
 import { Producer } from '../../producer.model';
 import { ProducersService } from '../../producers.service';
+import { SertificateModalComponent } from './sertificate-modal/sertificate-modal.component';
+import { Sertificate, SertificateType } from './sertificate.model';
+import { SertificatesService } from './sertificates.service';
 
 @Component({
   selector: 'app-producer-details',
@@ -15,6 +21,10 @@ export class ProducerDetailsPage implements OnInit {
 
   producer: Producer;
   isLoading = false;
+  sertificates: Sertificate[];
+  sertificatesSub: Subscription;
+  sertificateTypes = SertificateType;
+  keys = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -23,8 +33,12 @@ export class ProducerDetailsPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private navCtrl: NavController
-    ) { }
+    private navCtrl: NavController,
+    private sertificatesService: SertificatesService,
+    private toastCtrl: ToastController,
+    private authService: AuthService) {
+      this.keys = Object.keys(this.sertificateTypes);
+    }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -42,6 +56,24 @@ export class ProducerDetailsPage implements OnInit {
           this.isLoading = false;
         });
     });
+
+    this.sertificatesSub = this.sertificatesService.sertificates.subscribe(sertificates => {
+      this.sertificates = sertificates;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.route.paramMap.subscribe(paramMap => {
+      this.sertificatesService.getSertificates(paramMap.get('producerId')).subscribe(sertificates => {
+        console.log(sertificates);
+      });
+    });
+  }
+
+  ionViewDidEnter(){
+    if(this.sertificates.length===0 && this.authService.currentUser.email==='admin@admin.com'){
+      this.toastMessage(`Ovaj proizvođač još uvek nema unete sertifikate.`);
+    }
   }
 
   onDeleteProducer(){
@@ -115,4 +147,31 @@ export class ProducerDetailsPage implements OnInit {
       });
   }
 
+  onAddSertificate(){
+    this.modalCtrl
+      .create({
+        component: SertificateModalComponent,
+        componentProps: {title: 'Sertifikat proizvođača', producerId: this.producer.id}
+      })
+      .then((modal) => {
+        modal.present();
+        return modal.onDidDismiss();
+      }).then((resultData) => {
+      if (resultData.role === 'confirm') {
+        console.log(resultData);
+
+        this.sertificatesService.addSertificate(resultData.data.sertificateData.producerId, resultData.data.sertificateData.type, resultData.data.sertificateData.description, resultData.data.sertificateData.placeOfIssue, resultData.data.sertificateData.dateOfIssue, resultData.data.sertificateData.validFrom, resultData.data.sertificateData.validTo, resultData.data.sertificateData.authorizedPerson).subscribe((sertificates) => {
+
+        });
+      }
+    });
+  }
+
+  async toastMessage(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 5000,
+    });
+    toast.present();
+  }
 }

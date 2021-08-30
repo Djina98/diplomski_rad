@@ -78,6 +78,32 @@
       </ion-col>
     </ion-row>
 
+    <ion-card class="ion-no-margin">
+      <ion-card-header>
+        <ion-card-title>
+          Sertifikati koje poseduje proizvođač
+        </ion-card-title>
+      </ion-card-header>
+
+      <div class="sertificate-btn-wrap">
+        <ion-button class="sertificate-btn" (click)="onAddSertificate()">Dodaj sertifikat</ion-button>
+      </div>
+
+      <ion-card-content>
+        <ion-list *ngIf="sertificates.length>0">
+          <ion-item *ngFor="let sertificate of sertificates" [routerLink]="['/', 'producers', 'tabs', 'all-producers', producer.id, sertificate.id]">
+            <ion-label>{{sertificateTypes[sertificate.type]}}</ion-label>
+            <ion-icon name="chevron-forward"></ion-icon>
+          </ion-item>
+        </ion-list>
+
+        <ion-item *ngIf="sertificates.length===0">
+          <ion-label>Nema dostupnih sertifikata</ion-label>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+
 
   </ion-grid>
 </ion-content>

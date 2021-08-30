@@ -44,8 +44,8 @@
 
               <ion-item>
                 <ion-label  position="floating" color="primary">Vrsta meda</ion-label>
-                <ion-select name="type" type="text" formControlName="type"
-                            cancelText="Nazad" okText="Izaberi" required>
+                <ion-select interface="action-sheet" name="type" type="text" formControlName="type"
+                            cancelText="Nazad" required>
                   <ion-select-option class="option" *ngFor="let name of typesKeys" [value]="name">{{honeyTypes[name]}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -131,8 +131,8 @@
 
               <ion-item>
                 <ion-label position="floating" color="primary">Tip ambalaže</ion-label>
-                <ion-select name="packaging" type="text" formControlName="packaging"
-                            cancelText="Nazad" okText="Izaberi" required>
+                <ion-select interface="action-sheet" name="packaging" type="text" formControlName="packaging"
+                            cancelText="Nazad" required>
                   <ion-select-option *ngFor="let name of packagingKeys" [value]="name">{{packaging[name]}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -150,8 +150,8 @@
 
               <ion-item>
                 <ion-label position="floating" color="primary">Proizvođač</ion-label>
-                <ion-select name="producer" type="text" formControlName="producer"
-                            cancelText="Nazad" okText="Izaberi" required>
+                <ion-select interface="action-sheet" name="producer" type="text" formControlName="producer"
+                            cancelText="Nazad" required>
                   <ion-select-option *ngFor="let producer of producers" [value]="producer">{{producer.name}}</ion-select-option>
                 </ion-select>
               </ion-item>

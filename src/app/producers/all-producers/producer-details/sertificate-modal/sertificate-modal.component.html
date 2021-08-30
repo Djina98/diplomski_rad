@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="tertiary">{{title}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin">
+
+    <ion-card-content>
+      <form #sertificate="ngForm" (ngSubmit)="onAddSertificate()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item class="no-border">
+                <ion-input hidden type="text" [ngModel]='producerId' name="producerId" required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label  position="floating" color="primary">Vrsta sertifikata</ion-label>
+                <ion-select interface="action-sheet" type="text" cancelText="Nazad" [ngModel]='type' name="type" required>
+                  <ion-select-option class="option" *ngFor="let name of keys" [value]="name">{{sertificateTypes[name]}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Opis sertifikata</ion-label>
+                <ion-textarea rows="6" type="text" [ngModel]='description' name="description" required>
+                </ion-textarea>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Mesto izdavanja</ion-label>
+                <ion-input type="text" [ngModel]='placeOfIssue' name="placeOfIssue" required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Datum izdavanja</ion-label>
+                <ion-datetime type="text" displayFormat="MMM DD, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='dateOfIssue' name="dateOfIssue" required></ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Datum od</ion-label>
+                <ion-datetime type="text" displayFormat="MMM DD, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='validFrom' name="validFrom"></ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Datum do</ion-label>
+                <ion-datetime type="text" displayFormat="MMM DD, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='validTo' name="validTo"></ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Ovlašćeno lice</ion-label>
+                <ion-input type="text" [ngModel]='authorizedPerson' name="authorizedPerson" required>
+                </ion-input>
+              </ion-item>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!sertificate.valid">Sačuvaj</ion-button>
+        </div>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

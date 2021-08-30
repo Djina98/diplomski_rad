@@ -5,6 +5,7 @@ export class Producer implements Producer{
               public taxIdentificationNumber: string, public companyNumber: string,
               public website: string, public imageUrl: string) { }
 }
+
 export interface Producer {
   id: string;
   name: string;
@@ -15,24 +16,4 @@ export interface Producer {
   companyNumber: string;
   website: string;
   imageUrl: string;
-  //sertificates?: Sertificate[];
-}
-
-export interface Sertificate{
-  id: string;
-  type: SertificateType;
-  description: string;
-  placeOfIssue: string;
-  dateOfIssue: Date;
-  validFrom: Date;
-  validTo: Date;
-  authorizedPerson: string;
-}
-
-export enum SertificateType{
-  srpskiOrganski = 'Srpski organski sertifikat',
-  evorpskiOrganski = 'Evropski organski sertifikat',
-  haccp = 'HACCP sertifikat prostora',
-  pozitivnaOdluka = 'Pozitivna odluka o sertifikaciji',
-  ambalaza = 'Zdravstvena ispravnost ambalaze'
 }
