@@ -149,6 +149,23 @@
               </div>
 
               <ion-item>
+                <ion-label position="floating" color="primary">Raspoloživa količina</ion-label>
+                <ion-input name="inStock" type="number" formControlName="inStock" required>
+                </ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validationUserMessage.inStock">
+                  <small
+                    *ngIf="addProduct.get('inStock').hasError(validation.type) &&
+                    (addProduct.get('inStock').dirty ||
+                    addProduct.get('inStock').touched)">
+                    {{validation.message}}
+                  </small>
+                </ng-container>
+              </div>
+
+              <ion-item>
                 <ion-label position="floating" color="primary">Proizvođač</ion-label>
                 <ion-select interface="action-sheet" name="producer" type="text" formControlName="producer"
                             cancelText="Nazad" required>

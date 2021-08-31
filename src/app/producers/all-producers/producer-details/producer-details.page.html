@@ -72,11 +72,10 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col class="ion-text-center">
-        Opis: {{producer.description}}
-      </ion-col>
-    </ion-row>
+    <div class="sertificate-btn-wrap">
+      <ion-button class="sertificate-btn" (click)="expandItem()">Vidi opis proizvođača</ion-button>
+      <app-description [expandHeight]="itemExpandedHeight" [expanded]="itemExpanded">{{producer.description}}</app-description>
+    </div>
 
     <ion-card class="ion-no-margin">
       <ion-card-header>

@@ -9,6 +9,7 @@ import { ProducerDetailsPageRoutingModule } from './producer-details-routing.mod
 import { ProducerDetailsPage } from './producer-details.page';
 import { ProducerModalComponent } from '../../producer-modal/producer-modal.component';
 import { SertificateModalComponent } from './sertificate-modal/sertificate-modal.component';
+import { DescriptionComponent } from 'src/app/products/all-products/product-details/description/description.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { SertificateModalComponent } from './sertificate-modal/sertificate-modal
     IonicModule,
     ProducerDetailsPageRoutingModule
   ],
-  declarations: [ProducerDetailsPage, ProducerModalComponent, SertificateModalComponent],
+  declarations: [ProducerDetailsPage, ProducerModalComponent, SertificateModalComponent, DescriptionComponent],
   entryComponents: [ProducerModalComponent, SertificateModalComponent]
 })
 export class ProducerDetailsPageModule {}

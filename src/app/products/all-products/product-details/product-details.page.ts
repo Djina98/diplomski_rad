@@ -10,7 +10,7 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ProductModalComponent } from '../../product-modal/product-modal.component';
-import { Product } from '../../product.model';
+import { HoneyTypes, Packaging, Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
 import { LocationModalComponent } from './location-modal/location-modal.component';
 import { Location } from './location.model';
@@ -27,7 +27,14 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   product: Product;
   isLoading = false;
   locations: Location[];
+  honeyTypes = HoneyTypes;
+  honeyKeys = [];
+  packagingTypes = Packaging;
+  packagingKeys = [];
+  itemExpanded: boolean = false;
+  itemExpandedHeight: number = 0;
   private locationsSub: Subscription;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -39,8 +46,10 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     private navCtrl: NavController,
     private locationsService: LocationsService,
     private toastCtrl: ToastController,
-    public authService: AuthService
-    ) { }
+    public authService: AuthService) {
+        this.honeyKeys = Object.keys(this.honeyTypes);
+        this.packagingKeys = Object.keys(this.packagingTypes);
+     }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -115,8 +124,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
             name: this.product.name, type: this.product.type,
             description: this.product.description, amount: this.product.amount,
             price: this.product.price, yearOfProduction: this.product.yearOfProduction,
-            packaging: this.product.packaging, producer: this.product.producer,
-            imageUrl: this.product.imageUrl},
+            packaging: this.product.packaging, inStock: this.product.inStock,
+            producer: this.product.producer, imageUrl: this.product.imageUrl},
       })
       .then((modal) => {
         modal.present();
@@ -138,6 +147,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
                   resultData.data.productData.price,
                   resultData.data.productData.yearOfProduction,
                   resultData.data.productData.packaging,
+                  resultData.data.productData.inStock,
                   resultData.data.productData.producer,
                   resultData.data.productData.imageUrl,
                 )
@@ -149,6 +159,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
                   this.product.price = resultData.data.productData.price;
                   this.product.yearOfProduction = resultData.data.productData.yearOfProduction;
                   this.product.packaging = resultData.data.productData.packaging;
+                  this.product.inStock = resultData.data.productData.inStock;
                   this.product.producer = resultData.data.productData.producer;
                   this.product.imageUrl = resultData.data.productData.imageUrl;
                   loadingEl.dismiss();
@@ -184,5 +195,10 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
       duration: 5000,
     });
     toast.present();
+  }
+
+  expandItem() {
+    this.itemExpanded = !this.itemExpanded;
+    console.log(this.itemExpanded);
   }
 }

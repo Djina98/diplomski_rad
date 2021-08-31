@@ -41,6 +41,4 @@ export class ProductItemComponent implements OnInit {
       alertEl.present();
     });
   }
-
-
 }

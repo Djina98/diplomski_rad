@@ -4,12 +4,17 @@
       <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
     </ion-buttons>
     <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
-    <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@admin.com'">
-      <ion-button (click)="onEditProduct()">
+    <ion-buttons slot="primary">
+      <ion-button (click)="onEditProduct()"  *ngIf="authService.currentUser.email==='admin@admin.com'">
         <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
       </ion-button>
-      <ion-button (click)="onDeleteProduct()">
+      <ion-button (click)="onDeleteProduct()"  *ngIf="authService.currentUser.email==='admin@admin.com'">
         <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="onDeleteProduct()"  *ngIf="authService.currentUser.email!=='admin@admin.com'">
+        <ion-label class="cart" color="tertiary">Naruči  </ion-label>
+        <ion-icon name="cart" color="tertiary"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -36,8 +41,8 @@
 
     <ion-row>
       <ion-col class="ion-text-center">
-        <ion-icon name="leaf-outline"></ion-icon>
-        {{product.type}}
+        <ion-icon name="leaf"></ion-icon>
+        Vrsta meda: {{honeyTypes[product.type]}}
       </ion-col>
     </ion-row>
 
@@ -57,13 +62,41 @@
 
     <ion-row>
       <ion-col class="ion-text-center">
-        Opis: {{product.description}}
+        <ion-icon name="calendar-number"></ion-icon>
+        Godina proizvodnje: {{product.yearOfProduction}}.
       </ion-col>
     </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="gift"></ion-icon>
+        Ambalaža: {{packagingTypes[product.packaging]}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="cart"></ion-icon>
+        Na stanju je raspoloživo: {{product.inStock}} komada
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="color-fill"></ion-icon>
+          Proizvođač: {{product.producer.name}}
+      </ion-col>
+    </ion-row>
+
+    <div class="location-btn-wrap">
+      <ion-button class="location-btn" (click)="expandItem()">Vidi opis proizvoda</ion-button>
+      <app-description [expandHeight]="itemExpandedHeight" [expanded]="itemExpanded">{{product.description}}</app-description>
+    </div>
 
     <ion-card class="ion-no-margin">
       <ion-card-header>
         <ion-card-title>
+          <ion-icon name="pin"></ion-icon>
           Lokacije košnica
         </ion-card-title>
       </ion-card-header>

@@ -23,6 +23,7 @@ export class ProductModalComponent implements OnInit, OnDestroy {
   @Input() price: number;
   @Input() yearOfProduction: number;
   @Input() packaging: Packaging;
+  @Input() inStock: number;
   @Input() producer: Producer;
   @Input() imageUrl: string;
   @ViewChild('editProduct', { static: true }) editProduct: NgForm;
@@ -69,6 +70,7 @@ export class ProductModalComponent implements OnInit, OnDestroy {
           price: this.editProduct.value.price,
           yearOfProduction: this.editProduct.value.yearOfProduction,
           packaging: this.editProduct.value.packaging,
+          inStock: this.editProduct.value.inStock,
           producer: this.editProduct.value.producer,
           imageUrl: this.editProduct.value.imageUrl,
         }

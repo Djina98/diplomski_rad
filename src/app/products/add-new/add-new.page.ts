@@ -47,6 +47,9 @@ export class AddNewPage implements OnInit, OnDestroy {
     packaging: [
       {type: 'required', message:'Izaberite tip ambalaže'},
     ],
+    inStock: [
+      {type: 'required', message:'Unesite raspoloživu količinu'},
+    ],
     producer: [
       {type: 'required', message:'Izaberite proizvođača'},
     ],
@@ -103,6 +106,10 @@ export class AddNewPage implements OnInit, OnDestroy {
       packaging: new FormControl('', Validators.compose([
         Validators.required,
       ])),
+      inStock: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.min(0)
+      ])),
       producer: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -140,7 +147,8 @@ export class AddNewPage implements OnInit, OnDestroy {
     this.productsService.addProduct(this.addProduct.value.name, this.addProduct.value.type,
     this.addProduct.value.description, this.addProduct.value.amount,
     this.addProduct.value.price, this.addProduct.value.yearOfProduction,
-    this.addProduct.value.packaging, this.addProduct.value.producer, this.addProduct.value.imageUrl).subscribe(products => {
+    this.addProduct.value.packaging, this.addProduct.value.inStock, this.addProduct.value.producer,
+    this.addProduct.value.imageUrl).subscribe(products => {
       console.log(products);
     });
 

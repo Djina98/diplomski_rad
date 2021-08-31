@@ -19,6 +19,7 @@ interface ProductData {
   description: string;
   yearOfProduction: number;
   packaging: Packaging;
+  inStock: number;
   producer: Producer;
   imageUrl: string;
 }
@@ -74,7 +75,8 @@ export class ProductsService {
   }
 
   addProduct(name: string, type: HoneyTypes, description: string, amount: number, price: number,
-            yearOfProduction: number, packaging: Packaging, producer: Producer, imageUrl: string) {
+            yearOfProduction: number, packaging: Packaging, inStock: number, producer: Producer,
+            imageUrl: string) {
     let generatedId;
     let newProduct: Product;
 
@@ -90,6 +92,7 @@ export class ProductsService {
           price,
           yearOfProduction,
           packaging,
+          inStock,
           producer,
           imageUrl
         );
@@ -122,7 +125,7 @@ export class ProductsService {
             const products: Product[] = [];
             for(const key in productData){
               if(productData.hasOwnProperty(key)){
-                products.push(new Product(key, productData[key].name, productData[key].type, productData[key].description, productData[key].amount, productData[key].price, productData[key].yearOfProduction, productData[key].packaging, productData[key].producer, productData[key].imageUrl)
+                products.push(new Product(key, productData[key].name, productData[key].type, productData[key].description, productData[key].amount, productData[key].price, productData[key].yearOfProduction, productData[key].packaging, productData[key].inStock, productData[key].producer, productData[key].imageUrl)
                 );
               }
             }
@@ -151,6 +154,7 @@ export class ProductsService {
             resData.price,
             resData.yearOfProduction,
             resData.packaging,
+            resData.inStock,
             resData.producer,
             resData.imageUrl
           );
@@ -186,6 +190,7 @@ export class ProductsService {
     price: number,
     yearOfProduction: number,
     packaging: Packaging,
+    inStock: number,
     producer: Producer,
     imageUrl: string,
   )
@@ -203,6 +208,7 @@ export class ProductsService {
             price,
             yearOfProduction,
             packaging,
+            inStock,
             producer,
             imageUrl
           }
@@ -223,6 +229,7 @@ export class ProductsService {
           price,
           yearOfProduction,
           packaging,
+          inStock,
           producer,
           imageUrl
         );

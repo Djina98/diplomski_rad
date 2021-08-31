@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
 import { Component, OnInit } from '@angular/core';
@@ -25,6 +26,8 @@ export class ProducerDetailsPage implements OnInit {
   sertificatesSub: Subscription;
   sertificateTypes = SertificateType;
   keys = [];
+  itemExpanded: boolean = false;
+  itemExpandedHeight: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -173,5 +176,10 @@ export class ProducerDetailsPage implements OnInit {
       duration: 5000,
     });
     toast.present();
+  }
+
+  expandItem() {
+    this.itemExpanded = !this.itemExpanded;
+    console.log(this.itemExpanded);
   }
 }
