@@ -12,8 +12,8 @@
         <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
       </ion-button>
 
-      <ion-button (click)="onDeleteProduct()"  *ngIf="authService.currentUser.email!=='admin@admin.com'">
-        <ion-label class="cart" color="tertiary">Naruči  </ion-label>
+      <ion-button (click)="onAddToCart()"  *ngIf="authService.currentUser.email!=='admin@admin.com'">
+        <ion-label class="cart" color="tertiary">Dodaj u korpu</ion-label>
         <ion-icon name="cart" color="tertiary"></ion-icon>
       </ion-button>
     </ion-buttons>

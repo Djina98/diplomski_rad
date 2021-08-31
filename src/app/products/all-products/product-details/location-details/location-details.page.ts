@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/semi */
 /* eslint-disable no-trailing-spaces */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,6 +22,20 @@ export class LocationDetailsPage implements OnInit {
   product: Product;
   isLoading = false;
 
+/*
+  mapOptions: google.maps.MapOptions = {
+    center: { lat: 38.9987208, lng: -77.2538699 },
+    zoom : 14,
+    zoomControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false
+  }
+
+  marker = {
+      position: { lat: 38.9987208, lng: -77.2538699 },
+  }
+*/
   constructor(
     private route: ActivatedRoute,
     private locationsService: LocationsService,

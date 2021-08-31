@@ -1,7 +1,11 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/semi */
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-trailing-spaces */
 import { Component, Input, NgModule, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Product } from 'src/app/products/product.model';
 
 @Component({
@@ -19,7 +23,7 @@ export class LocationModalComponent implements OnInit {
   @Input() dateTo: Date;
   @ViewChild('location', { static: true }) location: NgForm;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private alertCtrl: AlertController) { }
 
   ngOnInit() {}
 
@@ -44,6 +48,24 @@ export class LocationModalComponent implements OnInit {
       },
       'confirm'
     );
+  }
+
+  customOptions = {
+    buttons: [{
+      text: 'Nazad',
+      role:'cancel',
+    }, {
+      text: 'Izbriši',
+      handler: () => this.location.controls['dateTo'].setValue(null)
+    }, {
+      text: 'Izaberi',
+      handler: (data) => {
+        console.log('Data', data);
+        let year: string = data.year.text;
+        let month: string = data.month.value < 10 ? '0' + data.month.value.toString(): data.month.value.toString();
+        this.location.controls['dateTo'].setValue(year + '-' + month)
+      }
+    }]
   }
 
 }

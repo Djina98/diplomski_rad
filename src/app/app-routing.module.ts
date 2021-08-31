@@ -27,7 +27,7 @@ const routes: Routes = [
     path: 'producers',
     loadChildren: () => import('./producers/producers.module').then( m => m.ProducersPageModule),
     canLoad: [AuthGuard]
-  }
+  },
 ];
 @NgModule({
   imports: [

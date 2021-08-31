@@ -42,7 +42,7 @@
 
               <ion-item>
                 <ion-label position="floating">Datum do</ion-label>
-                <ion-datetime type="text" displayFormat="MMM, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='dateTo' name="dateTo"></ion-datetime>
+                <ion-datetime type="text" displayFormat="MMM, YYYY" [ngModel]='dateTo' name="dateTo"  [pickerOptions]="customOptions"></ion-datetime>
               </ion-item>
 
             </ion-col>

@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { CartService } from '../../cart/cart.service';
 import { ProductModalComponent } from '../../product-modal/product-modal.component';
 import { HoneyTypes, Packaging, Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
@@ -46,7 +47,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     private navCtrl: NavController,
     private locationsService: LocationsService,
     private toastCtrl: ToastController,
-    public authService: AuthService) {
+    public authService: AuthService,
+    private cartsService: CartService) {
         this.honeyKeys = Object.keys(this.honeyTypes);
         this.packagingKeys = Object.keys(this.packagingTypes);
      }
@@ -169,6 +171,39 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
       });
   }
 
+  onAddToCart(){
+    this.alertCtrl.create({header: 'Dodaj u korpu',
+      message: 'Koliko komada ovog proizvoda želite da dodate u korpu?',
+      inputs: [
+        {
+          name: 'amount',
+          type: 'number',
+          placeholder: 'Broj komada',
+        }
+      ],
+      buttons: [{
+        text: 'Odustani',
+        role: 'cancel'
+      }, {
+        text: 'Dodaj',
+        handler: (alertData) => {
+          if(alertData.amount === '' || alertData.amount <= 0) {
+            this.failedAlert('Morate da unesete ispravan broj');
+            } else {
+              if(alertData.amount > this.product.amount){
+                this.failedAlert(`Na stanju je raspoloživo ${this.product.amount} komada`);
+              }
+              this.cartsService.addToCart(this.product, alertData.amount).subscribe(() => {
+                this.navCtrl.navigateBack('/products/tabs/cart');
+              });
+          }
+        }
+      }]
+      }).then(alertEl => {
+        alertEl.present();
+      });
+  }
+
   onAddLocation(){
     this.modalCtrl
       .create({
@@ -200,5 +235,20 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   expandItem() {
     this.itemExpanded = !this.itemExpanded;
     console.log(this.itemExpanded);
+  }
+
+  failedAlert(message: string) {
+    this.alertCtrl.create({
+    message,
+    buttons: [{
+    text: 'OK',
+      handler: () => {
+        this.onAddToCart();
+      }
+    }]
+
+    }).then(alertEl => {
+      alertEl.present();
+    });
   }
 }

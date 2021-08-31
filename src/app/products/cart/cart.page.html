@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="tertiary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="tertiary">Bee Organic</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let cartItem of cartItems">
+    <ion-item-sliding>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-img [src]="cartItem.product.imageUrl"></ion-img>
+        </ion-avatar>
+        <ion-label class="ion-text-wrap">{{cartItem.product.name}} - {{cartItem.amount}} komada</ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="tertiary" expandable>
+          <ion-buttons>
+            <ion-button (click)="onRemoveProduct(cartItem)">
+              <ion-icon name="trash" slot="icon-only" color="primary"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <div class="btn-wrap">
+    <ion-button class="btn" (click)="onOrder()">Naruči</ion-button>
+  </div>
+
+</ion-content>

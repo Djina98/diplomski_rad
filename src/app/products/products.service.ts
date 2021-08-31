@@ -9,6 +9,7 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { Producer } from '../producers/producer.model';
 import { ProducersService } from '../producers/producers.service';
+import { LocationsService } from './all-products/product-details/locations.service';
 import { HoneyTypes, Packaging, Product } from './product.model';
 
 interface ProductData {
@@ -68,7 +69,7 @@ export class ProductsService {
   ];*/
 
   constructor(private producersService: ProducersService, private http: HttpClient,
-              private authService: AuthService) { }
+              private authService: AuthService, private locationsService: LocationsService) { }
 
   get products() {
     return this._products.asObservable();
