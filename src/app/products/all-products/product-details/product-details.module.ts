@@ -9,7 +9,7 @@ import { ProductDetailsPageRoutingModule } from './product-details-routing.modul
 import { ProductDetailsPage } from './product-details.page';
 import { ProductModalComponent } from '../../product-modal/product-modal.component';
 import { LocationModalComponent } from './location-modal/location-modal.component';
-import { DescriptionComponent } from './description/description.component';
+import { ProductDescriptionComponent } from './product-description/product-description.component';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { DescriptionComponent } from './description/description.component';
     IonicModule,
     ProductDetailsPageRoutingModule
   ],
-  declarations: [ProductDetailsPage, ProductModalComponent, LocationModalComponent, DescriptionComponent],
+  declarations: [ProductDetailsPage, ProductModalComponent, LocationModalComponent, ProductDescriptionComponent],
   entryComponents: [ProductModalComponent, LocationModalComponent]
 })
 export class ProductDetailsPageModule {}

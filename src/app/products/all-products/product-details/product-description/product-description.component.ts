@@ -4,10 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-description',
-  templateUrl: './description.component.html',
-  styleUrls: ['./description.component.scss'],
+  templateUrl: './product-description.component.html',
+  styleUrls: ['./product-description.component.scss'],
 })
-export class DescriptionComponent implements OnInit {
+export class ProductDescriptionComponent implements OnInit {
   @Input('expanded') expanded;
   @Input('expandHeight') expandHeight;
 

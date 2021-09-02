@@ -71,11 +71,12 @@ ion-card-content{
     --background-activated: #EAAC7F;
     --background-focused: #EAAC7F;
     --background-hover: white;
-    color: #FFDF91;
+    color: #432818;
     border-radius: 25px;
-    --background: #432818;
-    background-color: #432818;
+    --background: #EAAC7F;
+    background-color: #EAAC7F;
     margin-bottom: 8px;
+    font-weight: bold;
   }
 
 }

@@ -34,6 +34,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   packagingKeys = [];
   itemExpanded: boolean = false;
   itemExpandedHeight: number = 0;
+  inCart = false;
   private locationsSub: Subscription;
 
 
@@ -106,7 +107,9 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
         }, {
           text: 'Obriši',
           handler: () => {
-
+            this.locationsService.deleteAllLocations(this.product.id).subscribe((locations)=> {
+              this.locations = locations;
+            });
             this.productsService.deleteProduct(this.product.id).subscribe(() => {
               this.navCtrl.navigateBack('/products/tabs/all-products');
             });
@@ -172,7 +175,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   }
 
   onAddToCart(){
-    this.alertCtrl.create({header: 'Dodaj u korpu',
+    if(this.inCart === false){
+      this.alertCtrl.create({header: 'Dodaj u korpu',
       message: 'Koliko komada ovog proizvoda želite da dodate u korpu?',
       inputs: [
         {
@@ -190,10 +194,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
           if(alertData.amount === '' || alertData.amount <= 0) {
             this.failedAlert('Morate da unesete ispravan broj');
             } else {
-              /*if(alertData.amount > this.product.amount){
-                this.failedAlert(`Na stanju je raspoloživo ${this.product.amount} komada`);
-              }*/
               this.cartsService.addToCart(this.product, alertData.amount).subscribe(() => {
+                this.inCart = true;
                 this.navCtrl.navigateBack('/products/tabs/cart');
               });
           }
@@ -202,6 +204,9 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
       }).then(alertEl => {
         alertEl.present();
       });
+    }else{
+      this.alreadyAdded('Ovaj proizvod se već nalazi u Vašoj korpi');
+    }
   }
 
   onAddLocation(){
@@ -244,6 +249,21 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     text: 'OK',
       handler: () => {
         this.onAddToCart();
+      }
+    }]
+
+    }).then(alertEl => {
+      alertEl.present();
+    });
+  }
+
+  alreadyAdded(message: string) {
+    this.alertCtrl.create({
+    message,
+    buttons: [{
+    text: 'OK',
+      handler: () => {
+        this.alertCtrl.dismiss();
       }
     }]
 

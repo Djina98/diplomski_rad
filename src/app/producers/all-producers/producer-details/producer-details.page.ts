@@ -90,7 +90,9 @@ export class ProducerDetailsPage implements OnInit {
         }, {
           text: 'Obriši',
           handler: () => {
-
+            this.sertificatesService.deleteAllSertificates(this.producer.id).subscribe((sertificates)=> {
+              this.sertificates = sertificates;
+            });
             this.producersService.deleteProducer(this.producer.id).subscribe(() => {
               this.navCtrl.navigateBack('/producers/tabs/all-producers');
             });

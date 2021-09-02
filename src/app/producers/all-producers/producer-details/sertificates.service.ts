@@ -183,4 +183,28 @@ export class SertificatesService {
       })
     );
   }
+
+  deleteAllSertificates(producerId: string){
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<{[key: string]: SertificateData}>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/sertificates.json?auth=${token}`
+          );
+        }), map((sertificateData: any) => {
+          const sertificates: Sertificate[] = [];
+          for(const key in sertificateData){
+            if(sertificateData.hasOwnProperty(key) && sertificateData[key].producerId === producerId){
+              this.deleteSertificate(key).subscribe(()=>{
+
+              });
+            }
+          }
+      return sertificates;
+    }),
+    tap(sertificates => {
+      this._sertificates.next(sertificates);
+    })
+  );
+  }
 }

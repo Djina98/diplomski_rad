@@ -1,3 +1,7 @@
+.no-border{
+  --border-color: white !important;
+}
+
 .bg-color{
   background: #f8eea5;
 }
@@ -55,8 +59,4 @@ ion-title{
     font-weight: bold;
   }
 
-}
-
-.no-border{
-  --border-color: white !important;
 }

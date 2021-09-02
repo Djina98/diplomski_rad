@@ -2,18 +2,18 @@
   <ion-tab-bar slot="bottom">
 
     <ion-tab-button tab="all-products">
-      <ion-icon name="cart" color="tertiary"></ion-icon>
-      <ion-label color="tertiary">Proizvodi</ion-label>
+      <ion-icon name="gift" color="primary"></ion-icon>
+      <ion-label color="primary">Proizvodi</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="add-new" *ngIf="authService.currentUser.email==='admin@admin.com'">
-      <ion-icon name="add-circle" color="tertiary"></ion-icon>
+      <ion-icon name="add-circle" color="primary"></ion-icon>
       <ion-label color="tertiary">Dodaj novi proizvod</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="cart" *ngIf="authService.currentUser.email!=='admin@admin.com'">
-      <ion-icon name="cart" color="tertiary"></ion-icon>
-      <ion-label color="tertiary">Moja korpa</ion-label>
+      <ion-icon name="cart" color="primary"></ion-icon>
+      <ion-label color="primary">Moja korpa</ion-label>
     </ion-tab-button>
 
   </ion-tab-bar>

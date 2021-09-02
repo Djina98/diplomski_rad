@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
-      <ion-menu-button color="tertiary"></ion-menu-button>
+      <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-title color="tertiary">Bee Organic</ion-title>
+    <ion-title color="primary">Bee Organic</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -23,6 +23,9 @@
             <ion-button (click)="onRemoveProduct(cartItem)">
               <ion-icon name="trash" slot="icon-only" color="primary"></ion-icon>
             </ion-button>
+            <ion-button (click)="onEditProduct(cartItem)">
+              <ion-icon name="pencil" slot="icon-only" color="primary"></ion-icon>
+            </ion-button>
           </ion-buttons>
         </ion-item-option>
       </ion-item-options>
@@ -30,8 +33,12 @@
 
   </ion-list>
 
+  <ion-item>
+    <ion-label>Ukupna cena: {{total}} dinara</ion-label>
+  </ion-item>
+
   <div class="btn-wrap">
-    <ion-button class="btn" (click)="onOrder()">Naruči</ion-button>
+    <ion-button class="btn" (click)="onOrder()" [disabled]="cartItems.length===0">Naruči</ion-button>
   </div>
 
 </ion-content>

@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title color="tertiary">{{title}}</ion-title>
+  <ion-toolbar color="tertiary">
+    <ion-title color="primary">{{title}}</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="onCancel()">
-        <ion-icon name="close" slot="icon-only" color="tertiary"></ion-icon>
+        <ion-icon name="close" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -48,12 +48,12 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Datum od</ion-label>
+                <ion-label position="floating">Datum početka važenja</ion-label>
                 <ion-datetime type="text" displayFormat="MMM DD, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='validFrom' name="validFrom"></ion-datetime>
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Datum do</ion-label>
+                <ion-label position="floating">Važi do</ion-label>
                 <ion-datetime type="text" displayFormat="MMM DD, YYYY" cancelText="Nazad" doneText="Izaberi" [ngModel]='validTo' name="validTo"></ion-datetime>
               </ion-item>
 

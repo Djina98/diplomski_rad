@@ -2,7 +2,7 @@
 import { CartItem } from "../products/cart/cartItem.model";
 
 export class Order implements Order{
-  constructor(public id: string, public products: CartItem[],
+  constructor(public id: string, public products: CartItem[], public totalPrice: number,
               public fullname: string, public email: string,
               public phoneNumber: string, public city: string,
               public street: string, public streetNumber: number, public status: string) { }
@@ -11,6 +11,7 @@ export class Order implements Order{
 export interface Product {
     id: string;
     products: CartItem[];
+    totalPrice: number;
     fullname: string;
     email: string;
     phoneNumber: string;

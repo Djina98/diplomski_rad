@@ -1,20 +1,20 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
+      <ion-back-button defaultHref="products/tabs/all-products" color="primary"></ion-back-button>
     </ion-buttons>
     <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
     <ion-buttons slot="primary">
       <ion-button (click)="onEditProduct()"  *ngIf="authService.currentUser.email==='admin@admin.com'">
-        <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
+        <ion-icon name="pencil" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
       <ion-button (click)="onDeleteProduct()"  *ngIf="authService.currentUser.email==='admin@admin.com'">
-        <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
+        <ion-icon name="trash" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
 
       <ion-button (click)="onAddToCart()"  *ngIf="authService.currentUser.email!=='admin@admin.com'">
-        <ion-label class="cart" color="tertiary">Dodaj u korpu</ion-label>
-        <ion-icon name="cart" color="tertiary"></ion-icon>
+        <ion-label class="cart" color="primary">Dodaj u korpu</ion-label>
+        <ion-icon name="cart" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

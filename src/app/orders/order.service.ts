@@ -12,6 +12,7 @@ import { Order } from './order.model';
 
 interface OrderData {
   products: CartItem[];
+  totalPrice: number;
   fullname: string;
   email: string;
   phoneNumber: string;
@@ -44,7 +45,7 @@ export class OrderService {
           const orders: Order[] = [];
           for(const key in orderData){
             if(orderData.hasOwnProperty(key)){
-              orders.push(new Order(key, orderData[key].products, orderData[key].fullname, orderData[key].email, orderData[key].phoneNumber, orderData[key].city, orderData[key].street, orderData[key].streetNumber, orderData[key].status)
+              orders.push(new Order(key, orderData[key].products, orderData[key].totalPrice, orderData[key].fullname, orderData[key].email, orderData[key].phoneNumber, orderData[key].city, orderData[key].street, orderData[key].streetNumber, orderData[key].status)
               );
             }
           }
@@ -56,7 +57,7 @@ export class OrderService {
   );
   }
 
-  order(products: CartItem[], fullname: string, email: string, phoneNumber: string, city: string,
+  order(products: CartItem[], totalPrice: number, fullname: string, email: string, phoneNumber: string, city: string,
         street: string, streetNumber: number, status: string){
     let generatedId;
     let newOrder: Order;
@@ -67,6 +68,7 @@ export class OrderService {
         newOrder = new Order(
           null,
           products,
+          totalPrice,
           fullname,
           email,
           phoneNumber,
@@ -103,6 +105,7 @@ export class OrderService {
           return new Order(
             id,
             resData.products,
+            resData.totalPrice,
             resData.fullname,
             resData.email,
             resData.phoneNumber,
@@ -114,5 +117,58 @@ export class OrderService {
         }
       )
     );
+  }
+
+  editOrder(
+    id: string,
+    products: CartItem[],
+    totalPrice: number,
+    fullname: string,
+    email: string,
+    phoneNumber: string,
+    city: string,
+    street: string,
+    streetNumber: number,
+    status: string
+    )
+    {
+      return this.authService.token.pipe(
+        take(1),
+        switchMap((token) => {
+          return this.http.put(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/orders/${id}.json?auth=${token}`,
+          {
+            products,
+            totalPrice,
+            fullname,
+            email,
+            phoneNumber,
+            city,
+            street,
+            streetNumber,
+            status
+          }
+          );
+      }), switchMap(() => {
+          return this.orders;
+      }),
+      take(1),
+      tap((orders) => {
+        const updatedOrderIndex = orders.findIndex((p) => p.id === id);
+        const updatedOrders = [...orders];
+        updatedOrders[updatedOrderIndex] = new Order(
+          id,
+          products,
+          totalPrice,
+          fullname,
+          email,
+          phoneNumber,
+          city,
+          street,
+          streetNumber,
+          status
+        );
+      this._orders.next(updatedOrders);
+    }));
   }
 }

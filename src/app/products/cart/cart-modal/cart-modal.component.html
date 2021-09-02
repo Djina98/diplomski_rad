@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title color="primary">{{title}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin">
+
+    <ion-card-content>
+      <form #cartItem="ngForm" (ngSubmit)="onEdit()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+
+              <ion-item class="no-border">
+                <ion-input hidden type="text" [ngModel]='product' name="product" required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating" color="primary">Količina</ion-label>
+                <ion-input type="number" [ngModel]='amount' name="amount" required>
+                </ion-input>
+              </ion-item>
+
+              <ion-item class="no-border">
+                <ion-input hidden type="text" [ngModel]='userEmail' name="userEmail" required>
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="sign-btn-wrap">
+          <ion-button type="submit" shape="round" fill="solid" class="sign-btn" [disabled]="!cartItem.valid">Sačuvaj</ion-button>
+        </div>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

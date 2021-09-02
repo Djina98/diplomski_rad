@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="products/tabs/all-products" color="tertiary"></ion-back-button>
+      <ion-back-button defaultHref="products/tabs/all-products" color="primary"></ion-back-button>
     </ion-buttons>
     <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
     <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@admin.com'">
       <ion-button (click)="onEditLocation()">
-        <ion-icon name="pencil" slot="icon-only" color="tertiary"></ion-icon>
+        <ion-icon name="pencil" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
       <ion-button (click)="onDeleteLocation()">
-        <ion-icon name="trash" slot="icon-only" color="tertiary"></ion-icon>
+        <ion-icon name="trash" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

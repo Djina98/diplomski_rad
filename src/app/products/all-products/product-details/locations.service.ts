@@ -186,4 +186,28 @@ export class LocationsService {
       })
     );
   }
+
+  deleteAllLocations(productId: string){
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<{[key: string]: LocationData}>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/sertificates.json?auth=${token}`
+          );
+        }), map((locationData: any) => {
+          const locations: Location[] = [];
+          for(const key in locationData){
+            if(locationData.hasOwnProperty(key) && locationData[key].productId === productId){
+              this.deleteLocation(key).subscribe(()=>{
+
+              });
+            }
+          }
+      return locations;
+    }),
+    tap(locations => {
+      this._locations.next(locations);
+    })
+  );
+  }
 }
