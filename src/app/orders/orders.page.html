@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="tertiary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="tertiary">Bee Organic</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let order of orders">
+
+      <ion-item [routerLink]="['/', 'orders', order.id]">
+        <ion-label class="ion-text-wrap">{{order.fullname}} - {{order.city}}</ion-label>
+      </ion-item>
+
+  </ion-list>
+</ion-content>

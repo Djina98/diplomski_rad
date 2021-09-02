@@ -190,9 +190,9 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
           if(alertData.amount === '' || alertData.amount <= 0) {
             this.failedAlert('Morate da unesete ispravan broj');
             } else {
-              if(alertData.amount > this.product.amount){
+              /*if(alertData.amount > this.product.amount){
                 this.failedAlert(`Na stanju je raspoloživo ${this.product.amount} komada`);
-              }
+              }*/
               this.cartsService.addToCart(this.product, alertData.amount).subscribe(() => {
                 this.navCtrl.navigateBack('/products/tabs/cart');
               });

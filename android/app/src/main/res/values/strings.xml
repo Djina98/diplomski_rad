@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">diplomski</string>
+    <string name="title_activity_main">diplomski</string>
+    <string name="package_name">com.ionic.diplomski</string>
+    <string name="custom_url_scheme">com.ionic.diplomski</string>
+</resources>

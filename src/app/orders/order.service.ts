@@ -90,4 +90,29 @@ export class OrderService {
       })
     );
   }
+
+  getOrder(id: string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<OrderData>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/orders/${id}.json?auth=${token}`
+          );
+        }),
+        map((resData: OrderData) => {
+          return new Order(
+            id,
+            resData.products,
+            resData.fullname,
+            resData.email,
+            resData.phoneNumber,
+            resData.city,
+            resData.street,
+            resData.streetNumber,
+            resData.status
+          );
+        }
+      )
+    );
+  }
 }

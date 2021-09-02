@@ -28,6 +28,11 @@ const routes: Routes = [
     loadChildren: () => import('./producers/producers.module').then( m => m.ProducersPageModule),
     canLoad: [AuthGuard]
   },
+  {
+    path: 'orders',
+    loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule),
+    canLoad: [AuthGuard]
+  },
 ];
 @NgModule({
   imports: [

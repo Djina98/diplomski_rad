@@ -165,6 +165,7 @@ export class ProductsService {
   }
 
   deleteProduct(id: string) {
+    this.locationsService.deleteLocations(id);
     return this.authService.token.pipe(
       take(1),
       switchMap((token) => {

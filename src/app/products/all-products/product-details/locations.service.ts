@@ -107,6 +107,7 @@ export class LocationsService {
   }
 
   deleteLocation(id: string) {
+    console.log('pozvao delete location: ' + id);
     return this.authService.token.pipe(
       take(1),
       switchMap((token) => {
@@ -121,6 +122,26 @@ export class LocationsService {
       tap((locations) => {
         this._locations.next(locations.filter((p) => p.id !== id));
       })
+    );
+  }
+
+  deleteLocations(productId: string) {
+    console.log('pozvao delete locations');
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.
+          get<{[key: string]: LocationData}>(
+            `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/locations.json?auth=${token}`
+            );
+          }),
+          map((locationData: any) => {
+            for(const key in locationData){
+              if(locationData.hasOwnProperty(key) && locationData[key].productId === productId){
+                this.deleteLocation(locationData[key].id);
+              }
+            }
+        })
     );
   }
 

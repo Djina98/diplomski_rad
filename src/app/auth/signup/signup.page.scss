@@ -32,7 +32,7 @@ ion-card-title{
 ion-card-subtitle{
   text-align: center;
   padding-top: 15px !important;
-  font-size: 13px;
+  font-size: 15px;
   color: #432818;
   font-weight: 400;
   text-transform: none;
@@ -45,11 +45,11 @@ ion-item{
   --highlight-color-focused: #432818;
   --padding-start: 0;
   --inner-padding-end: 0;
-  font-size: 13px;
+  font-size: 14px;
 
   ion-input{
     color: black;
-    font-size: 13px;
+    font-size: 15px;
   }
 
   ion-input:hover{
@@ -80,26 +80,7 @@ ion-card-content{
     --background: #432818;
     background-color: #432818;
     margin-bottom: 8px;
+    font-weight: bold;
   }
 
-}
-
-.text-tag{
-  margin-top: 25px;
-  text-align: center;
-  span{
-    font-size: 13px;
-    font-weight: normal;
-    color: #432818;
-  }
-
-}
-
-.social-btns{
-  margin-top: 10px;
-  text-align: center;
-  ion-button{
-    width: 30px;
-    padding-left: 5px !important;
-  }
 }

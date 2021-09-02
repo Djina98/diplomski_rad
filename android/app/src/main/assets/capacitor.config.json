@@ -1,0 +1,6 @@
+{
+	"appId": "com.elab.diplomski",
+	"appName": "diplomski",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
