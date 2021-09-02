@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
-      <ion-menu-button color="tertiary"></ion-menu-button>
+      <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-title color="tertiary">Bee Organic</ion-title>
+    <ion-title color="primary">Bee Organic</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -143,23 +143,6 @@
                     *ngIf="addProduct.get('packaging').hasError(validation.type) &&
                     (addProduct.get('packaging').dirty ||
                     addProduct.get('packaging').touched)">
-                    {{validation.message}}
-                  </small>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating" color="primary">Raspoloživa količina</ion-label>
-                <ion-input name="inStock" type="number" formControlName="inStock" required>
-                </ion-input>
-              </ion-item>
-
-              <div>
-                <ng-container *ngFor="let validation of validationUserMessage.inStock">
-                  <small
-                    *ngIf="addProduct.get('inStock').hasError(validation.type) &&
-                    (addProduct.get('inStock').dirty ||
-                    addProduct.get('inStock').touched)">
                     {{validation.message}}
                   </small>
                 </ng-container>

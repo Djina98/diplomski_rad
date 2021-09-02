@@ -76,20 +76,13 @@
 
     <ion-row>
       <ion-col class="ion-text-center">
-        <ion-icon name="cart"></ion-icon>
-        Na stanju je raspoloživo: {{product.inStock}} komada
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="ion-text-center">
         <ion-icon name="color-fill"></ion-icon>
           Proizvođač: {{product.producer.name}}
       </ion-col>
     </ion-row>
 
     <div class="location-btn-wrap">
-      <ion-button class="location-btn" (click)="expandItem()">Vidi opis proizvoda</ion-button>
+      <ion-button shape="round" class="location-btn" (click)="expandItem()">Vidi opis proizvoda</ion-button>
       <app-description [expandHeight]="itemExpandedHeight" [expanded]="itemExpanded">{{product.description}}</app-description>
     </div>
 
@@ -102,7 +95,7 @@
       </ion-card-header>
 
       <div class="location-btn-wrap">
-        <ion-button class="location-btn" (click)="onAddLocation()" *ngIf="authService.currentUser.email==='admin@admin.com'">Dodaj lokacije košnica</ion-button>
+        <ion-button shape="round" class="location-btn" (click)="onAddLocation()" *ngIf="authService.currentUser.email==='admin@admin.com'">Dodaj lokaciju košnica</ion-button>
       </div>
 
       <ion-card-content>

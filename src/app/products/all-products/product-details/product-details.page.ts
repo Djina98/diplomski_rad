@@ -129,7 +129,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
             name: this.product.name, type: this.product.type,
             description: this.product.description, amount: this.product.amount,
             price: this.product.price, yearOfProduction: this.product.yearOfProduction,
-            packaging: this.product.packaging, inStock: this.product.inStock,
+            packaging: this.product.packaging,
             producer: this.product.producer, imageUrl: this.product.imageUrl},
       })
       .then((modal) => {
@@ -152,7 +152,6 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
                   resultData.data.productData.price,
                   resultData.data.productData.yearOfProduction,
                   resultData.data.productData.packaging,
-                  resultData.data.productData.inStock,
                   resultData.data.productData.producer,
                   resultData.data.productData.imageUrl,
                 )
@@ -164,7 +163,6 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
                   this.product.price = resultData.data.productData.price;
                   this.product.yearOfProduction = resultData.data.productData.yearOfProduction;
                   this.product.packaging = resultData.data.productData.packaging;
-                  this.product.inStock = resultData.data.productData.inStock;
                   this.product.producer = resultData.data.productData.producer;
                   this.product.imageUrl = resultData.data.productData.imageUrl;
                   loadingEl.dismiss();

@@ -73,7 +73,7 @@
     </ion-row>
 
     <div class="sertificate-btn-wrap">
-      <ion-button class="sertificate-btn" (click)="expandItem()">Vidi opis proizvođača</ion-button>
+      <ion-button shape="round" class="sertificate-btn" (click)="expandItem()">Vidi opis proizvođača</ion-button>
       <app-description [expandHeight]="itemExpandedHeight" [expanded]="itemExpanded">{{producer.description}}</app-description>
     </div>
 
@@ -85,7 +85,7 @@
       </ion-card-header>
 
       <div class="sertificate-btn-wrap">
-        <ion-button class="sertificate-btn" (click)="onAddSertificate()" *ngIf="authService.currentUser.email==='admin@admin.com'">Dodaj sertifikat</ion-button>
+        <ion-button shape="round" class="sertificate-btn" (click)="onAddSertificate()" *ngIf="authService.currentUser.email==='admin@admin.com'">Dodaj sertifikat</ion-button>
       </div>
 
       <ion-card-content>

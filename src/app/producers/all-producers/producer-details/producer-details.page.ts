@@ -75,7 +75,7 @@ export class ProducerDetailsPage implements OnInit {
 
   ionViewDidEnter(){
     if(this.sertificates.length===0 && this.authService.currentUser.email==='admin@admin.com'){
-      this.toastMessage(`Ovaj proizvođač još uvek nema unete sertifikate.`);
+      this.toastMessage(`Za ovog proizvođača nisu uneti sertifikati.`);
     }
   }
 

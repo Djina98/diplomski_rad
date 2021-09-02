@@ -47,25 +47,13 @@ export class AddNewPage implements OnInit, OnDestroy {
     packaging: [
       {type: 'required', message:'Izaberite tip ambalaže'},
     ],
-    inStock: [
-      {type: 'required', message:'Unesite raspoloživu količinu'},
-    ],
     producer: [
       {type: 'required', message:'Izaberite proizvođača'},
     ],
     imageUrl: [
       {type: 'required', message:'Unesite URL adresu slike proizvoda'},
     ],
-    /*
-    latitude: [
-      {type: 'required', message:'Unesite geografsku širinu lokacije'},
-    ],
-    longitude: [
-      {type: 'required', message:'Unesite geografsku dužinu lokacije'},
-    ],
-    dateFrom: [
-      {type: 'required', message:'Unesite datum od'},
-    ],*/
+
   };
 
   addProduct: FormGroup;
@@ -106,10 +94,6 @@ export class AddNewPage implements OnInit, OnDestroy {
       packaging: new FormControl('', Validators.compose([
         Validators.required,
       ])),
-      inStock: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.min(0)
-      ])),
       producer: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -147,7 +131,7 @@ export class AddNewPage implements OnInit, OnDestroy {
     this.productsService.addProduct(this.addProduct.value.name, this.addProduct.value.type,
     this.addProduct.value.description, this.addProduct.value.amount,
     this.addProduct.value.price, this.addProduct.value.yearOfProduction,
-    this.addProduct.value.packaging, this.addProduct.value.inStock, this.addProduct.value.producer,
+    this.addProduct.value.packaging, this.addProduct.value.producer,
     this.addProduct.value.imageUrl).subscribe(products => {
       console.log(products);
     });
