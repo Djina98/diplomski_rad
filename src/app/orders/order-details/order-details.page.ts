@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Order } from '../order.model';
 import { OrderService } from '../order.service';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
+//import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { Product } from 'src/app/products/product.model';
 import { CartItem } from 'src/app/products/cart/cartItem.model';
 
@@ -29,7 +29,7 @@ export class OrderDetailsPage implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private ordersService: OrderService,
-    public emailComposer: EmailComposer
+    //public emailComposer: EmailComposer
   ) { }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class OrderDetailsPage implements OnInit {
       isHtml: false,
       app: 'Gmail'
     }
-    this.emailComposer.open(email);
+    //this.emailComposer.open(email);
     this.changeOrderStatus('Odobreno');
   }
 
@@ -91,7 +91,7 @@ export class OrderDetailsPage implements OnInit {
       isHtml: false,
       app: 'Gmail'
     }
-    this.emailComposer.open(email);
+    //this.emailComposer.open(email);
     this.changeOrderStatus('Odbijeno');
   }
 
