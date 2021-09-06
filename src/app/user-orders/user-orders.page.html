@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list *ngFor="let order of orders">
 
-      <ion-item [routerLink]="['/', 'orders', order.id]">
+      <ion-item [routerLink]="['/', 'user-orders', order.id]">
         <ion-label class="ion-text-wrap"> ({{order.date | date: 'MM.dd.yyyy'}})  {{ order.fullname}}, {{order.city}}</ion-label>
       </ion-item>
 

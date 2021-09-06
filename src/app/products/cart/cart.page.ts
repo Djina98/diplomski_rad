@@ -5,6 +5,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -26,15 +27,14 @@ export class CartPage implements OnInit, OnDestroy {
   product: Product;
   user: RegisterUser;
   totalPrice: number = 0;
-  total: number = 0;
   private sub: Subscription;
 
   constructor(private cartsService: CartService,
               private authService: AuthService,
               private modalCtrl: ModalController,
               private ordersService: OrderService,
-              private toastCtrl: ToastController,
-              private loadingCtrl: LoadingController
+              private loadingCtrl: LoadingController,
+              private router: Router
               ) {
                 this.user = authService.currentUser;
               }
@@ -48,12 +48,6 @@ export class CartPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.cartsService.getCartItems(this.user.email).subscribe(cartsItems => {
     });
-  }
-
-  ionViewDidEnter(){
-    for(let cartItem of this.cartItems){
-      this.total = this.total + cartItem['price'];
-    }
   }
 
   ngOnDestroy() {
@@ -84,9 +78,10 @@ export class CartPage implements OnInit, OnDestroy {
       }
       this.cartsService.emptyCart(this.user.email).subscribe((cartItems)=> {
         this.cartItems = cartItems;
+        this.totalPrice = 0;
       });
       this.ordersService.order(resultData.data.orderData.products, this.totalPrice, resultData.data.orderData.fullname, resultData.data.orderData.email, resultData.data.orderData.phoneNumber, resultData.data.orderData.city, resultData.data.orderData.street, resultData.data.orderData.streetNumber, resultData.data.orderData.status).subscribe((orders) => {
-        this.toastMessage('Vaša porudžbina je uspešno evidentirana. Čeka se odobrenje od admin tima.');
+        this.router.navigateByUrl('/user-orders');
       });
     }
   });
@@ -128,11 +123,10 @@ export class CartPage implements OnInit, OnDestroy {
         });
   }
 
-  async toastMessage(message: string) {
-    const toast = await this.toastCtrl.create({
-      message,
-      duration: 5000,
-    });
-    toast.present();
+  calculateTotalPrice(){
+    this.totalPrice = 0;
+    for(let cartItem of this.cartItems){
+      this.totalPrice = this.totalPrice + cartItem['price'];
+    }
   }
 }

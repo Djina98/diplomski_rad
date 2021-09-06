@@ -5,7 +5,8 @@ export class Order implements Order{
   constructor(public id: string, public products: CartItem[], public totalPrice: number,
               public fullname: string, public email: string,
               public phoneNumber: string, public city: string,
-              public street: string, public streetNumber: number, public status: string) { }
+              public street: string, public streetNumber: number, public date: Date,
+              public status: string) { }
 }
 
 export interface Product {
@@ -18,5 +19,6 @@ export interface Product {
     city: string;
     street: string;
     streetNumber: number;
+    date: Date;
     status: string;
 }

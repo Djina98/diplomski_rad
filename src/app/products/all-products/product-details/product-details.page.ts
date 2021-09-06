@@ -231,6 +231,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     const toast = await this.toastCtrl.create({
       message,
       duration: 5000,
+      position: 'top',
+      cssClass: 'toastAfterHeader'
     });
     toast.present();
   }

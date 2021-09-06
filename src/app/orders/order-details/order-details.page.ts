@@ -11,6 +11,7 @@ import { OrderService } from '../order.service';
 //import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { Product } from 'src/app/products/product.model';
 import { CartItem } from 'src/app/products/cart/cartItem.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-order-details',
@@ -26,7 +27,6 @@ export class OrderDetailsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private ordersService: OrderService,
     //public emailComposer: EmailComposer
@@ -54,7 +54,7 @@ export class OrderDetailsPage implements OnInit {
 
   acceptOrder(){
     this.totalPrice = this.order.totalPrice + 300;
-    let email= {
+    /*let email= {
       to: this.order.email,
       cc: [],
       bcc: [],
@@ -69,13 +69,13 @@ export class OrderDetailsPage implements OnInit {
       isHtml: false,
       app: 'Gmail'
     }
-    //this.emailComposer.open(email);
+    this.emailComposer.open(email);*/
     this.changeOrderStatus('Odobreno');
   }
 
   declineOrder(){
     this.totalPrice = this.order.totalPrice + 300;
-    let email= {
+    /*let email= {
       to: this.order.email,
       cc: [],
       bcc: [],
@@ -91,7 +91,7 @@ export class OrderDetailsPage implements OnInit {
       isHtml: false,
       app: 'Gmail'
     }
-    //this.emailComposer.open(email);
+    this.emailComposer.open(email);*/
     this.changeOrderStatus('Odbijeno');
   }
 
@@ -107,6 +107,7 @@ export class OrderDetailsPage implements OnInit {
           this.order.city,
           this.order.street,
           this.order.streetNumber,
+          this.order.date,
           status
         )
         .subscribe((orders) => {

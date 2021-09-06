@@ -33,6 +33,11 @@ const routes: Routes = [
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule),
     canLoad: [AuthGuard]
   },
+  {
+    path: 'user-orders',
+    loadChildren: () => import('./user-orders/user-orders.module').then( m => m.UserOrdersPageModule),
+    canLoad: [AuthGuard]
+  },
 ];
 @NgModule({
   imports: [
