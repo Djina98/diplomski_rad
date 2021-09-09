@@ -127,6 +127,10 @@ export class CartPage implements OnInit, OnDestroy {
       })
       .then((resultData) => {
         if (resultData.role === 'confirm') {
+          if(resultData.data.cartItemData.amount <= 0){
+            this.failedAlert('Morate da unesete ispravnu količinu');
+            return;
+          }
           this.loadingCtrl
               .create({message: 'Čuvanje...'})
               .then((loadingEl) => {
@@ -154,5 +158,20 @@ export class CartPage implements OnInit, OnDestroy {
       cssClass: 'toastAfterHeader'
     });
     toast.present();
+  }
+
+  failedAlert(message: string) {
+    this.alertCtrl.create({
+    message,
+    buttons: [{
+    text: 'OK',
+      handler: () => {
+        this.alertCtrl.dismiss();
+      }
+    }]
+
+    }).then(alertEl => {
+      alertEl.present();
+    });
   }
 }
