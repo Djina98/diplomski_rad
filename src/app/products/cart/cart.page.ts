@@ -103,7 +103,8 @@ export class CartPage implements OnInit, OnDestroy {
         this.totalPrice = 0;
       });
       this.ordersService.order(resultData.data.orderData.products, this.totalPrice, resultData.data.orderData.fullname, resultData.data.orderData.email, resultData.data.orderData.phoneNumber, resultData.data.orderData.city, resultData.data.orderData.street, resultData.data.orderData.streetNumber, resultData.data.orderData.status).subscribe((orders) => {
-        this.router.navigateByUrl('/user-orders');
+        //this.router.navigateByUrl('/user-orders');
+        this.toastMessage('Vaša narudžbina je uspešno evidentirana. Možete videti detalje na stranici Moje narudžbine');
       });
     }
   });
@@ -148,7 +149,7 @@ export class CartPage implements OnInit, OnDestroy {
   async toastMessage(message: string) {
     const toast = await this.toastCtrl.create({
       message,
-      duration: 5000,
+      duration: 3000,
       position: 'top',
       cssClass: 'toastAfterHeader'
     });

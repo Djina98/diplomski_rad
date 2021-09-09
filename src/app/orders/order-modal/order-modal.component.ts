@@ -2,6 +2,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 import { CartItem } from 'src/app/products/cart/cartItem.model';
 import { Product } from 'src/app/products/product.model';
 
@@ -14,7 +15,7 @@ export class OrderModalComponent implements OnInit {
   @Input() title: string;
   @Input() products: CartItem[];
   @Input() fullname: string;
-  @Input() email: string;
+  @Input() email: string = this.authService.currentUser.email;
   @Input() phoneNumber: string;
   @Input() city: string;
   @Input() street: string;
@@ -22,7 +23,7 @@ export class OrderModalComponent implements OnInit {
   @Input() status: string;
   @ViewChild('order', { static: true }) order: NgForm;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private authService: AuthService) { }
 
   ngOnInit() {}
 
