@@ -25,11 +25,16 @@ interface CartItemData {
 })
 export class CartService {
   private _cartItems = new BehaviorSubject<CartItem[]>([]);
+  private _inCart = new BehaviorSubject<CartItem[]>([]);
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   get cartItems() {
     return this._cartItems.asObservable();
+  }
+
+  get inCart() {
+    return this._inCart.asObservable();
   }
 
   getCartItems(userEmail: string) {
@@ -166,6 +171,29 @@ export class CartService {
         this._cartItems.next(updatedCartItems);
       })
     );
+  }
+
+  alreadyInCart(productId: string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.get<{[key: string]: CartItemData}>(
+          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/carts.json?auth=${token}`
+          );
+        }), map((cartData: any) => {
+          const items: CartItem[] = [];
+          for(const key in cartData){
+            if(cartData.hasOwnProperty(key) && cartData[key].product.id === productId){
+              items.push(new CartItem(key, cartData[key].product, cartData[key].amount, cartData[key].price, cartData[key].userEmail)
+              );
+            }
+          }
+      return items;
+    }),
+    tap(items => {
+      this._inCart.next(items);
+    })
+  );
   }
 
 }

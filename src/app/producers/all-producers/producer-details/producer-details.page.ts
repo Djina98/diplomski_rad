@@ -176,6 +176,7 @@ export class ProducerDetailsPage implements OnInit {
     const toast = await this.toastCtrl.create({
       message,
       duration: 5000,
+      position: 'top',
     });
     toast.present();
   }

@@ -10,6 +10,7 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CartService } from '../../cart/cart.service';
+import { CartItem } from '../../cart/cartItem.model';
 import { ProductModalComponent } from '../../product-modal/product-modal.component';
 import { HoneyTypes, Packaging, Product } from '../../product.model';
 import { ProductsService } from '../../products.service';
@@ -22,6 +23,8 @@ import { LocationsService } from './locations.service';
   templateUrl: './product-details.page.html',
   styleUrls: ['./product-details.page.scss'],
 })
+
+
 export class ProductDetailsPage implements OnInit, OnDestroy {
 
 
@@ -34,7 +37,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   packagingKeys = [];
   itemExpanded: boolean = false;
   itemExpandedHeight: number = 0;
-  inCart = false;
+  inCart: CartItem[];
+  private inCartSub: Subscription;
   private locationsSub: Subscription;
 
 
@@ -74,6 +78,10 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     this.locationsSub = this.locationsService.locations.subscribe(locations => {
       this.locations = locations;
     });
+
+    this.inCartSub = this.cartsService.inCart.subscribe(inCart => {
+      this.inCart = inCart;
+    });
   }
 
   ionViewWillEnter() {
@@ -82,6 +90,13 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
         console.log(locations);
       });
     });
+
+    this.route.paramMap.subscribe(paramMap => {
+      this.cartsService.alreadyInCart(paramMap.get('productId')).subscribe(inCart => {
+        console.log(inCart);
+      });
+    });
+
   }
 
   ionViewDidEnter(){
@@ -173,7 +188,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   }
 
   onAddToCart(){
-    if(this.inCart === false){
+    if(this.inCart.length === 0){
       this.alertCtrl.create({header: 'Dodaj u korpu',
       message: 'Koliko komada ovog proizvoda želite da dodate u korpu?',
       inputs: [
@@ -193,7 +208,6 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
             this.failedAlert('Morate da unesete ispravan broj');
             } else {
               this.cartsService.addToCart(this.product, alertData.amount).subscribe(() => {
-                this.inCart = true;
                 this.navCtrl.navigateBack('/products/tabs/cart');
               });
           }

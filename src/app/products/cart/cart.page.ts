@@ -6,7 +6,7 @@
 /* eslint-disable no-trailing-spaces */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RegisterUser } from 'src/app/auth/registerUser.model';
@@ -34,7 +34,9 @@ export class CartPage implements OnInit, OnDestroy {
               private modalCtrl: ModalController,
               private ordersService: OrderService,
               private loadingCtrl: LoadingController,
-              private router: Router
+              private router: Router,
+              private alertCtrl: AlertController,
+              private toastCtrl: ToastController
               ) {
                 this.user = authService.currentUser;
               }
@@ -48,6 +50,11 @@ export class CartPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.cartsService.getCartItems(this.user.email).subscribe(cartsItems => {
     });
+
+  }
+
+  ionViewDidEnter(){
+    this.toastMessage('Prevucite proizvod ulevo za dodatne funkcionalnosti');
   }
 
   ngOnDestroy() {
@@ -57,8 +64,23 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   onRemoveProduct(cartItem: CartItem){
-    this.cartsService.remove(cartItem.id).subscribe(() => {
+    this.alertCtrl.create({
+      header: 'Brisanje proizvoda',
+      message: 'Da li ste sigurni da želite da uklonite ovaj proizvod iz korpe?',
+      buttons:
+      [{
+          text: 'Odustani',
+          role: 'cancel'
+        }, {
+          text: 'Ukloni',
+          handler: () => {
+            this.cartsService.remove(cartItem.id).subscribe(() => {
 
+            });
+          }
+        }]
+    }).then(alertEl => {
+      alertEl.present();
     });
   }
 
@@ -123,10 +145,13 @@ export class CartPage implements OnInit, OnDestroy {
         });
   }
 
-  calculateTotalPrice(){
-    this.totalPrice = 0;
-    for(let cartItem of this.cartItems){
-      this.totalPrice = this.totalPrice + cartItem['price'];
-    }
+  async toastMessage(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 5000,
+      position: 'top',
+      cssClass: 'toastAfterHeader'
+    });
+    toast.present();
   }
 }
