@@ -3,16 +3,16 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="products/tabs/all-products" color="primary"></ion-back-button>
     </ion-buttons>
-    <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
+
     <ion-buttons slot="primary">
-      <ion-button (click)="onEditProduct()"  *ngIf="authService.currentUser.email==='admin@admin.com'">
+      <ion-button (click)="onEditProduct()"  *ngIf="authService.currentUser.email==='admin@beeorganic.com'">
         <ion-icon name="pencil" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
-      <ion-button (click)="onDeleteProduct()"  *ngIf="authService.currentUser.email==='admin@admin.com'">
+      <ion-button (click)="onDeleteProduct()"  *ngIf="authService.currentUser.email==='admin@beeorganic.com'">
         <ion-icon name="trash" slot="icon-only" color="primary"></ion-icon>
       </ion-button>
 
-      <ion-button (click)="onAddToCart()"  *ngIf="authService.currentUser.email!=='admin@admin.com'">
+      <ion-button (click)="onAddToCart()"  *ngIf="authService.currentUser.email!=='admin@beeorganic.com'">
         <ion-label class="cart" color="primary">Dodaj u korpu</ion-label>
         <ion-icon name="cart" color="primary"></ion-icon>
       </ion-button>

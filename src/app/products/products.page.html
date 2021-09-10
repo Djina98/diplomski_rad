@@ -6,12 +6,12 @@
       <ion-label color="primary">Proizvodi</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="add-new" *ngIf="authService.currentUser.email==='admin@admin.com'">
+    <ion-tab-button tab="add-new" *ngIf="authService.currentUser.email==='admin@beeorganic.com'">
       <ion-icon name="add-circle" color="primary"></ion-icon>
       <ion-label color="primary">Dodaj novi proizvod</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="cart" *ngIf="authService.currentUser.email!=='admin@admin.com'">
+    <ion-tab-button tab="cart" *ngIf="authService.currentUser.email!=='admin@beeorganic.com'">
       <ion-icon name="cart" color="primary"></ion-icon>
       <ion-label color="primary">Moja korpa</ion-label>
     </ion-tab-button>

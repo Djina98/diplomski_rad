@@ -3,8 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="producers/tabs/all-producers" color="primary"></ion-back-button>
     </ion-buttons>
-    <!--<ion-title color="tertiary" class="ion-text-center">Opširnije</ion-title>-->
-    <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@admin.com'">
+
+    <ion-buttons slot="primary" *ngIf="authService.currentUser.email==='admin@beeorganic.com'">
       <ion-button (click)="onEditProducer()">
         <ion-icon name="pencil" slot="icon-only" color="primary"></ion-icon>
       </ion-button>

@@ -1,12 +1,12 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom" *ngIf="authService.currentUser.email==='admin@admin.com'">
+  <ion-tab-bar slot="bottom" *ngIf="authService.currentUser.email==='admin@beeorganic.com'">
 
     <ion-tab-button tab="all-producers">
       <ion-icon name="people" color="primary"></ion-icon>
       <ion-label color="primary">Proizvođači</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="add-new" *ngIf="authService.currentUser.email==='admin@admin.com'">
+    <ion-tab-button tab="add-new" *ngIf="authService.currentUser.email==='admin@beeorganic.com'">
       <ion-icon name="add-circle" color="primary"></ion-icon>
       <ion-label color="primary">Dodaj novog</ion-label>
     </ion-tab-button>

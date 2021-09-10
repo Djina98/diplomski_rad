@@ -205,7 +205,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
         text: 'Dodaj',
         handler: (alertData) => {
           if(alertData.amount === '' || alertData.amount <= 0) {
-            this.failedAlert('Morate da unesete ispravan broj');
+            this.failedAlert('Morate da unesete ispravnu količinu');
             } else {
               this.cartsService.addToCart(this.product, alertData.amount).subscribe(() => {
                 this.navCtrl.navigateBack('/products/tabs/cart');

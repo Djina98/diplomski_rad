@@ -40,7 +40,6 @@ export class AuthService {
   private _isUserAuthenticated = false;
   private _user = new BehaviorSubject<User>(null);
   private _users = new BehaviorSubject<RegisterUser[]>([]);
-  //private _role = new BehaviorSubject<RegisterUser>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -48,20 +47,6 @@ export class AuthService {
     return this._users.asObservable();
   }
 
-  /*
-  get role() {
-    return this._role.asObservable().pipe(
-      map((userRole) => {
-        if (userRole) {
-          return userRole.role;
-        } else {
-          return null;
-        }
-      })
-    );
-
-  }
-*/
   get isUserAuthenticated() {
 
     return this._user.asObservable().pipe(
@@ -135,13 +120,13 @@ export class AuthService {
   }
 
   addNewUser(user: UserData){
-    if(user.email === 'admin@admin.com'){
+    if(user.email === 'admin@beeorganic.com'){
       this.addAdmin(user).subscribe(admin =>{
-        //console.log(admin);
+
       });
     }else{
       this.addUser(user).subscribe(res =>{
-        //console.log(res);
+
       });
     }
   }
@@ -210,40 +195,4 @@ export class AuthService {
       );
   }
 
-  /*
-  getUserRole(email: string){
-
-    let userRole: RegisterUser;
-
-    return this.token.pipe(
-      take(1),
-      switchMap((token) => {
-        return this.http.get<UserData>(
-          `https://diplomski-a6b5f-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`
-          );
-        }),
-        map((resData: UserData) => {
-
-          for(const key in resData){
-            if(resData.hasOwnProperty(key) && resData[key].email === email){
-              userRole = new RegisterUser(
-                null,
-                userRole.fullname,
-                userRole.phoneNumber,
-                userRole.address,
-                userRole.email,
-                userRole.role
-              );
-              return userRole;
-            }
-          }
-        }
-      ),
-      take(1),
-          tap((role) => {
-            this._role.next(role);
-          })
-    );
-  }
-  */
 }
