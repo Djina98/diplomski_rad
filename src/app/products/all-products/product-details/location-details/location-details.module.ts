@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { LocationDetailsPageRoutingModule } from './location-details-routing.module';
 import { LocationDetailsPage } from './location-details.page';
+import { MapModalComponent } from '../map-modal/map-modal.component';
 //import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { LocationDetailsPage } from './location-details.page';
     LocationDetailsPageRoutingModule,
     //GoogleMapsModule
   ],
-  declarations: [LocationDetailsPage]
+  declarations: [LocationDetailsPage, MapModalComponent],
+  entryComponents: [MapModalComponent]
 })
 export class LocationDetailsPageModule {}

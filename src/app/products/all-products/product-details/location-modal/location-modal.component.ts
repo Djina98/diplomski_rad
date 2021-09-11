@@ -6,7 +6,6 @@
 import { Component, Input, NgModule, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
-import { Product } from 'src/app/products/product.model';
 
 @Component({
   selector: 'app-location-modal',

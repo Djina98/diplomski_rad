@@ -3,13 +3,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Product } from 'src/app/products/product.model';
 import { ProductsService } from 'src/app/products/products.service';
 import { LocationModalComponent } from '../location-modal/location-modal.component';
 import { Location } from '../location.model';
 import { LocationsService } from '../locations.service';
+import { MapModalComponent } from '../map-modal/map-modal.component';
+
 
 @Component({
   selector: 'app-location-details',
@@ -17,7 +18,6 @@ import { LocationsService } from '../locations.service';
   styleUrls: ['./location-details.page.scss'],
 })
 export class LocationDetailsPage implements OnInit {
-
   location: Location;
   product: Product;
   isLoading = false;
@@ -140,6 +140,22 @@ export class LocationDetailsPage implements OnInit {
                 });
             });
         }
+      });
+  }
+
+  onOpenMap() {
+    this.modalCtrl
+      .create({
+        component: MapModalComponent,
+        componentProps: {
+            title: 'Prikaz na mapi',
+            latitude: this.location.latitude,
+            longitude: this.location.longitude
+          },
+      })
+      .then((modal) => {
+        modal.present();
+        return modal.onDidDismiss();
       });
   }
 

@@ -6,6 +6,14 @@ ion-header{
   margin-bottom: 60px !important;
 }
 
-ion-label{
-  font-weight: bold;
+.location-btn-wrap {
+  text-align: center;
+  padding-top: 20px;
+
+  .location-btn{
+    --background: #EAAC7F;
+    color: #432818;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 }

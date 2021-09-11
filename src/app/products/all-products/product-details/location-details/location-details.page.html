@@ -22,6 +22,7 @@
   </div>
 
   <ion-grid *ngIf="!isLoading" no-padding>
+
     <!--
     <div class="my-google-map">
       <google-map [options]="mapOptions">
@@ -29,6 +30,7 @@
       </google-map>
     </div>
     -->
+
     <ion-row>
       <ion-col class="ion-text-center">
         <ion-label>Koordinate lokacije:</ion-label>
@@ -36,9 +38,7 @@
     </ion-row>
     <ion-row>
       <ion-col class="ion-text-center">
-        <ion-badge color="secondary">
           <ion-label>{{location.latitude}} N, {{location.longitude}} E</ion-label>
-        </ion-badge>
       </ion-col>
     </ion-row>
 
@@ -49,11 +49,13 @@
     </ion-row>
     <ion-row>
       <ion-col class="ion-text-center">
-        <ion-badge color="secondary">
           <ion-label>{{location.dateFrom | date: 'MM.yyyy'}} - {{location.dateTo | date: 'MM.yyyy'}}</ion-label>
-        </ion-badge>
       </ion-col>
     </ion-row>
+
+    <div class="location-btn-wrap">
+      <ion-button shape="round" class="location-btn" (click)="onOpenMap()">Prikaži lokaciju na mapi</ion-button>
+    </div>
 
   </ion-grid>
 
