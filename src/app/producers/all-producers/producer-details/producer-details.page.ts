@@ -74,7 +74,7 @@ export class ProducerDetailsPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    if(this.sertificates.length===0 && this.authService.currentUser.email==='admin@admin.com'){
+    if(this.sertificates.length===0 && this.authService.currentUser.email==='admin@beeorganic.com'){
       this.toastMessage(`Za ovog proizvođača nisu uneti sertifikati.`);
     }
   }
@@ -175,7 +175,7 @@ export class ProducerDetailsPage implements OnInit {
   async toastMessage(message: string) {
     const toast = await this.toastCtrl.create({
       message,
-      duration: 5000,
+      duration: 3000,
       position: 'top',
     });
     toast.present();

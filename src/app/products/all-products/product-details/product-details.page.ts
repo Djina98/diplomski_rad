@@ -100,7 +100,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter(){
-    if(this.locations.length===0 && this.authService.currentUser.email==='admin@admin.com'){
+    if(this.locations.length===0 && this.authService.currentUser.email==='admin@beeorganic.com'){
       this.toastMessage(`Za ovaj proizvod nisu unete lokacije košnica.`);
     }
   }
@@ -244,7 +244,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   async toastMessage(message: string) {
     const toast = await this.toastCtrl.create({
       message,
-      duration: 5000,
+      duration: 3000,
       position: 'top',
       cssClass: 'toastAfterHeader'
     });
